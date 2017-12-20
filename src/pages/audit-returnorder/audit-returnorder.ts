@@ -7,7 +7,7 @@ import { AppService, AppConfig } from '../../app/app.service';
   templateUrl: 'audit-returnorder.html'
 })
 export class AuditReturnorder {
-  auditReturnorderArray: any;
+  auditReturnorderArray: any = [];
   limit: number = 10; 
   up: Boolean = true;//上拉刷新和第一次进入页面时
   down: Boolean = false;//下拉刷新和返回上一级页面时
