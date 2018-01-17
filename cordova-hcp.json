@@ -1,5 +1,7 @@
 {
   "name": "TopBss",
   "update": "resume",
-  "content_url": "https://chcp.61topbaby.com/www"
+  "content_url": "https://chcp.91topbaby.com/www",
+  "ios_identifier": "com.topbaby.bss",
+  "android_identifier": "com.topbaby.ecommerce.mobile.bss"
 }
