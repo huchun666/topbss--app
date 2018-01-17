@@ -17,7 +17,7 @@
           <span class="go">到</span>
           <div class="time-end">
             <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" min="{{dateEndMin}}" max="{{dateEndMax}}" [(ngModel)]="dateEnd">
-            </ion-datetime>
+            </ion-datetime> 
             <span class="clear" *ngIf="dateEnd" (click)="clearDateEnd()">X</span>
           </div>
         </div>
@@ -42,6 +42,7 @@
         <ion-refresher-content>
         </ion-refresher-content>
       </ion-refresher>
+  
       <div class="order-items" *ngFor="let order of orderList; let i = index">
         <!-- 订单编号 -->
         <div class="order-title">
@@ -51,7 +52,7 @@
           <!-- 订单状态-->
           <span [ngClass]="{auditStatus: true, pass:(order.status | setOrderStatus).pass , auditing:(order.status | setOrderStatus).audit} ">{{(order.status | setOrderStatus).status}}</span>
         </div>
-        <!-- 商品 -->
+        <!-- 商品1 -->
         <div class="order-item" *ngFor="let product of order.orderItemProductSkuDTOS">
           <dl>
             <dt>
@@ -66,6 +67,7 @@
             <dd class="count">X{{ product.number }}</dd>
           </dl>
         </div>
+  
         <!-- 已完成订单 -->
         <div class="orderOperate">
           <dl>
@@ -76,6 +78,7 @@
             </dt>
             <dd class="total">会员手机：{{ order.memberMobile }}</dd>
             <dd class="member-phone" *ngIf="order.status == 3 || order.status == 6 || order.status == 'C'">收货时间：{{ order.receiptTime | date:'yyyy-MM-dd HH:mm:ss' }}</dd>
+            <!-- <dd class="member-phone" *ngIf="order.status == 4">退款时间：{{ order.cancelTime | date:'yyyy-MM-dd HH:mm:ss' }}</dd> -->
           </dl>
         </div>
         <div class="order-dtail-box">
@@ -91,6 +94,7 @@
           <div class="pay-money">
             会员实付金额
             <span>￥{{ order.payAmount }}</span>
+            
           </div>
           <div class="btn-show" (click)="showDetail(i)">
             <span *ngIf="isShowDetail[i] == false">点击查看明细</span>
@@ -99,6 +103,7 @@
           </div>
         </div>
       </div>
+  
       <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="showInfinite && !loadingShow">
         <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
       </ion-infinite-scroll>
@@ -110,7 +115,7 @@
     <div class="btn-noMore" *ngIf="showNoMore">
       <span>—— 没有更多信息了 ——</span>
     </div>
-    <div class="request-defeat" *ngIf="requestDefeat">
+    <div class="request-defeat" *ngIf = "requestDefeat">
       <img src="./assets/image/requestDefeat.png" alt="">
       <p>啊哦！页面走丢了</p>
       <button class="btn-request-defeat" ion-button full (touchstart)="requestDefeatRefresh()">
