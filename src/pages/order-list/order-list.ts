@@ -219,30 +219,4 @@ export class OrderList {
     this.orderList = [];
     this.getOrderList();
   }
-  swipe(event) {
-    if (event.distance > 50) {
-      if (event.deltaX < 0) {
-        if (this.currentStatus == 'all') {
-          this.getCurrentStatus(1);
-        } else if (this.currentStatus == 0) {
-          this.getCurrentStatus(2);
-        } else if (this.currentStatus == 3) {
-          this.getCurrentStatus(3);
-        } else if (this.currentStatus == 4) {
-          this.getCurrentStatus(4);
-        }
-      } else {
-        if (this.currentStatus == 'C') {
-          this.getCurrentStatus(3);
-        } else if (this.currentStatus == 4) {
-          this.getCurrentStatus(2);
-        } else if (this.currentStatus == 3) {
-          this.getCurrentStatus(1);
-        } else if (this.currentStatus == 0) {
-          this.getCurrentStatus(0);
-        }
-      }
-    }
-  }
-
 }

@@ -1,36 +1,35 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title text-center>订单列表</ion-title>
-    <span class='brandshop-order' (touchstart)="goBrandshoOrder()">
-      门店所有订单
-    </span>
-  </ion-navbar>
-  <ion-toolbar class="filter-box">
-    <div class="time-box">
-      <div class="search-title">选择日期</div>
-      <div class="search-list">
-        <div class="time-start">
-          <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" max="{{dateStartMax}}" [(ngModel)]="dateStart">
-          </ion-datetime>
-          <span class="clear" *ngIf="dateStart" (click)="clearDateStart()">X</span>
-        </div>
-        <span class="go">到</span>
-        <div class="time-end">
-          <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" min="{{dateEndMin}}" max="{{dateEndMax}}" [(ngModel)]="dateEnd">
-          </ion-datetime>
-          <span class="clear" *ngIf="dateEnd" (click)="clearDateEnd()">X</span>
+    <ion-navbar>
+      <ion-title text-center>订单列表</ion-title>
+      <span class='brandshop-order' (touchstart)="goBrandshoOrder()">
+        门店所有订单
+      </span>
+    </ion-navbar>
+    <ion-toolbar class="filter-box">
+      <div class="time-box">
+        <div class="search-title">选择日期</div>
+        <div class="search-list">
+          <div class="time-start">
+            <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" max="{{dateStartMax}}" [(ngModel)]="dateStart">
+            </ion-datetime>
+            <span class="clear" *ngIf="dateStart" (click)="clearDateStart()">X</span>
+          </div>
+          <span class="go">到</span>
+          <div class="time-end">
+            <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" min="{{dateEndMin}}" max="{{dateEndMax}}" [(ngModel)]="dateEnd">
+            </ion-datetime>
+            <span class="clear" *ngIf="dateEnd" (click)="clearDateEnd()">X</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="status-box">
-      <ul>
-        <li *ngFor="let orderStatus of orderStatusList, let i = index" [ngClass]="{active:currentStatus == orderStatus.status}" (click)="getCurrentStatus(i)">{{ orderStatus.label }}</li>
-      </ul>
-    </div>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <div (swipe)="swipe($event)">
+      <div class="status-box">
+        <ul>
+          <li *ngFor="let orderStatus of orderStatusList, let i = index" [ngClass]="{active:currentStatus == orderStatus.status}" (click)="getCurrentStatus(i)">{{ orderStatus.label }}</li>
+        </ul>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
     <div class="order-list">
       <!-- loading -->
       <div class="loading-wrapper" *ngIf="loadingShow">
@@ -118,5 +117,5 @@
         刷新再找一找
       </button>
     </div>
-  </div>
-</ion-content>
+  </ion-content>
+  
