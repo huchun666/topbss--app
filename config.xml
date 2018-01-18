@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-packageName="com.topbaby.ecommerce.mobile.bss" android-versionCode="202" defaultlocale="zh-CN" id="com.topbaby.bss" ios-CFBundleIdentifier="com.topbaby.bss" ios-CFBundleVersion="2.0.2" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-packageName="com.topbaby.ecommerce.mobile.bss" android-versionCode="20002" defaultlocale="zh-CN" id="com.topbaby.bss" ios-CFBundleIdentifier="com.topbaby.bss" ios-CFBundleVersion="2.0.2" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name short="淘璞帮">TopBss</name>
     <description>淘璞官方门店导购服务平台，在这里，您可以随时了解到最新福利政策，掌握最佳的赚钱攻略.</description>
     <author email="dev@61topbaby.com" href="https://www.61topbaby.com/">61Topbaby Dev Team</author>
