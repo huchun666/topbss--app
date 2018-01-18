@@ -10,15 +10,13 @@
       <div class="search-title">选择日期</div>
       <div class="search-list">
         <div class="time-start">
-          <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD"
-            max="{{dateStartMax}}" [(ngModel)]="dateStart">
+          <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" max="{{dateStartMax}}" [(ngModel)]="dateStart">
           </ion-datetime>
           <span class="clear" *ngIf="dateStart" (click)="clearDateStart()">X</span>
         </div>
         <span class="go">到</span>
         <div class="time-end">
-          <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD"
-            min="{{dateEndMin}}" max="{{dateEndMax}}" [(ngModel)]="dateEnd">
+          <ion-datetime (ionChange)="getOrderListByDate()" placeholder="请选择日期" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" min="{{dateEndMin}}" max="{{dateEndMax}}" [(ngModel)]="dateEnd">
           </ion-datetime>
           <span class="clear" *ngIf="dateEnd" (click)="clearDateEnd()">X</span>
         </div>
@@ -44,7 +42,6 @@
       <ion-refresher-content>
       </ion-refresher-content>
     </ion-refresher>
-
     <div class="order-items" *ngFor="let order of orderList; let i = index">
       <!-- 订单编号 -->
       <div class="order-title">
@@ -54,7 +51,7 @@
         <!-- 订单状态-->
         <span [ngClass]="{auditStatus: true, pass:(order.status | setOrderStatus).pass , auditing:(order.status | setOrderStatus).audit} ">{{(order.status | setOrderStatus).status}}</span>
       </div>
-      <!-- 商品1 -->
+      <!-- 商品 -->
       <div class="order-item" *ngFor="let product of order.orderItemProductSkuDTOS">
         <dl>
           <dt>
@@ -69,7 +66,6 @@
           <dd class="count">X{{ product.number }}</dd>
         </dl>
       </div>
-
       <!-- 已完成订单 -->
       <div class="orderOperate">
         <dl>
@@ -96,7 +92,6 @@
         <div class="pay-money">
           会员实付金额
           <span>￥{{ order.payAmount }}</span>
-
         </div>
         <div class="btn-show" (click)="showDetail(i)">
           <span *ngIf="isShowDetail[i] == false">点击查看明细</span>
@@ -105,7 +100,6 @@
         </div>
       </div>
     </div>
-
     <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="showInfinite && !loadingShow">
       <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>
