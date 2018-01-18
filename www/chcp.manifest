@@ -205,11 +205,11 @@
   },
   {
     "file": "build/main.css",
-    "hash": "be7e0a8db40da8cba9b3d6325a1ed070"
+    "hash": "f792dca530182623d0c1290196bae801"
   },
   {
     "file": "build/main.js",
-    "hash": "643bb21d7c187542efe123d0f7c52a57"
+    "hash": "53c38eba9210def6820e6af784b58683"
   },
   {
     "file": "build/polyfills.js",
