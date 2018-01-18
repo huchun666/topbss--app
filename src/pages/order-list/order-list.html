@@ -76,7 +76,6 @@
           </dt>
           <dd class="total">会员手机：{{ order.memberMobile }}</dd>
           <dd class="member-phone" *ngIf="order.status == 3 || order.status == 6 || order.status == 'C'">收货时间：{{ order.receiptTime | date:'yyyy-MM-dd HH:mm:ss' }}</dd>
-          <!-- <dd class="member-phone" *ngIf="order.status == 4">退款时间：{{ order.cancelTime | date:'yyyy-MM-dd HH:mm:ss' }}</dd> -->
         </dl>
       </div>
       <div class="order-dtail-box">
