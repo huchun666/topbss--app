@@ -35,6 +35,7 @@ ionic cordova platform add android
 * 插件地址：[phonegap-plugin-barcodescanner](https://github.com/apache/cordova-plugin-statusbar.git)
 * 适配platform: Android/IOS
 * 安装方法:
+
   ```
    ionic cordova plugin add phonegap-plugin-barcodescanner
    npm install --save @ionic-native/barcode-scanner
@@ -45,6 +46,7 @@ ionic cordova platform add android
 * 插件地址：[cordova-hot-code-push-plugin](https://github.com/nordnet/cordova-hot-code-push)
 * 适配platform: Android/IOS
 * 安装方法:
+
   ```
    ionic cordova plugin add cordova-hot-code-push-plugin
    npm install -g cordova-hot-code-push-cli
@@ -55,13 +57,14 @@ ionic cordova platform add android
 * 插件地址：[cordova-hot-code-push-plugin](https://github.com/apache/cordova-plugin-network-information)
 * 适配platform: Android/IOS
 * 安装方法:
-  ```
-   ionic cordova plugin add cordova-plugin-network-information
-   npm install --save @ionic-native/network
 
-  ```
-  
+```
+ionic cordova plugin add cordova-plugin-network-information
+npm install --save @ionic-native/network
+```
+
 ## 在Android上运行APK
+
 ```
 ionic cordova run  android --prod
 ```
@@ -169,9 +172,24 @@ cordova-hcp build
 
 
 ## 部署流程
+修改完文件后保存 -> cordova-hcp build (重新生成release) -> 打包编译APP ->发布热更新文件(www)到服务器 -> 测试APP热更新
+
+* 保存修改好的文件
 
 * cordova-hcp build
 
-此命令会生成各个平台(iOS 和Android)上的config.xml 文件
+此命令会生成www下的chcp.json和chcp.manifest文件，build的时候需要确保cordova-hcp.json模板文件内的content_url和platform(android or ios)内的的config.xml中的config-file的域名保持对应
 
-* build 
+* 打包编译APP
+
+```
+./build-test.sh     //测试APK编译脚本
+./ production.sh    //生产APK编译脚本
+```
+
+* 发布热更新文件到服务端
+
+将根目录下的www文件发布到服务端，确保platform(android or ios)内的config.xml中的chcp的config-file的url可以访问。
+
+* 测试APP热更新
+APP开启后，退到后台，然后重新打开。则会自动进行更新。如果是低版iphone，比如iphone5s，那么则需要退出app，然后重新开启，则会进行更新。
