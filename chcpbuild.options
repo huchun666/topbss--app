@@ -1,0 +1,8 @@
+{
+   "QA": {
+    "config-file": "https://chcp.91topbaby.com/chcp.json"
+  },
+  "production": {
+    "config-file": "https://chcp.61topbaby.com/chcp.json"
+  }
+}

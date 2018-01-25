@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { App, Nav, NavController, ModalController, ViewController  } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { App, Nav, ModalController } from 'ionic-angular';
 import { Withdraw } from '../withdraw/withdraw';
 import { Login } from '../login/login';
 import { MyCode } from '../mycode/mycode';
@@ -9,7 +9,6 @@ import { WithdrawRecord } from '../withdraw-record/withdraw-record';
 import { Help } from '../help/help';
 import { AddAccount } from '../account/add-account/add-account';
 import { AppService, AppConfig } from '../../app/app.service';
-
 @Component({
   selector: 'personl',
   templateUrl: 'personl.html'
@@ -49,9 +48,7 @@ export class Personl {
   pageList: any = null;
   constructor(
     public nav: Nav,
-    public navCtrl: NavController,
-    public modalCtrl: ModalController, 
-    public viewCtrl: ViewController,
+    public modalCtrl: ModalController,
     private app: App,
     public appService: AppService,
   ) {
@@ -65,6 +62,8 @@ export class Personl {
       "addAccount": AddAccount,
       "help": Help
     }
+  }
+  ionViewDidEnter() {
     this.getCurrent();
     this.getAccount();
   }
@@ -73,14 +72,14 @@ export class Personl {
     this.isStar = !this.isStar;
     this.showText = !this.isStar ? '隐藏' : '显示';
     this.showImg = !this.isStar ? 'hide.png' : 'show.png';
-    this.userAccount.balance = !this.isStar ?  this.moneyList.balance : '*****';
-    this.userAccount.verifyAmount = !this.isStar ?  this.moneyList.verifyAmount : '*****';
-    this.userAccount.withdrawAmount = !this.isStar ?  this.moneyList.withdrawAmount : '*****';
+    this.userAccount.balance = !this.isStar ? this.moneyList.balance : '*****';
+    this.userAccount.verifyAmount = !this.isStar ? this.moneyList.verifyAmount : '*****';
+    this.userAccount.withdrawAmount = !this.isStar ? this.moneyList.withdrawAmount : '*****';
   }
   /* 退出登录 */
   logOut() {
-    this.appService.setItem("tpb_token","");
-    this.appService.setItem("refresh_token","");
+    this.appService.setItem("tpb_token", "");
+    this.appService.setItem("refresh_token", "");
     let appNav = this.app.getRootNav();
     appNav.setRoot(Login);
   }
@@ -89,7 +88,7 @@ export class Personl {
     if (!this.userCurrent.boundWechat && page === Withdraw) {
       page = this.pageList.addAccount;
     }
-    let pageModal = this.modalCtrl.create(page, {'param1': param1, 'param2': param2});
+    let pageModal = this.modalCtrl.create(page, { 'param1': param1, 'param2': param2 });
     pageModal.onDidDismiss(data => {
       this.getCurrent();
       this.getAccount();
@@ -103,34 +102,28 @@ export class Personl {
   /* 获取当前导购员基本信息 */
   getCurrent() {
     let url = AppConfig.API.current;
-    this.appService.httpGet(url)
-      .then( data => {
-        this.userCurrent = data;
-        this.formatTelphone();
-      })
-      .catch(error => {
-        this.appService.getToken(error, () => {
-          this.getCurrent();
-        });
-        console.log(error);
+    this.appService.httpGet(url).then(data => {
+      this.userCurrent = data;
+      this.formatTelphone();
+    }).catch(error => {
+      this.appService.getToken(error, () => {
+        this.getCurrent();
       });
+      console.log(error);
+    });
   }
   getAccount() {
     let url = AppConfig.API.account;
-    this.appService.httpGet(url)
-      .then( data => {
-        this.moneyList.balance = data.balance;
-        this.moneyList.verifyAmount = data.verifyAmount;
-        this.moneyList.withdrawAmount = data.withdrawAmount;
-        this.userAccount = data;
-      })
-      .catch(error => {
-        this.appService.getToken(error, () => {
-          this.getAccount();
-        });
-        console.log(error);
+    this.appService.httpGet(url).then(data => {
+      this.moneyList.balance = data.balance;
+      this.moneyList.verifyAmount = data.verifyAmount;
+      this.moneyList.withdrawAmount = data.withdrawAmount;
+      this.userAccount = data;
+    }).catch(error => {
+      this.appService.getToken(error, () => {
+        this.getAccount();
       });
+      console.log(error);
+    });
   }
-  
-
 }

@@ -1,7 +1,6 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { AppService, AppConfig } from '../../app/app.service';
-import { NavController, ViewController } from 'ionic-angular';
-import CryptoJS  from 'crypto-js';
+import CryptoJS from 'crypto-js';
 import Base64 from 'js-base64';
 @Component({
   selector: 'mycode',
@@ -13,8 +12,6 @@ export class MyCode {
   myCode: string = "";
   brandshopIndexUrl: string = "";
   constructor(
-    public navCtrl: NavController,
-    public viewCtrl: ViewController,
     public appService: AppService
   ) {
     this.getParams();
@@ -56,25 +53,23 @@ export class MyCode {
   }
   /** 获取时间 **/
   getNowUtcTime() {
-	  let date      = new Date();
-	  let nowYear   = date.getFullYear();
-	  let nowMoth   = date.getMonth() + 1;
-	  let nowDay    = date.getDate();
-	  let nowHour   = date.getHours();
-	  let nowMinute = date.getMinutes();
-	  let nowSecond = date.getSeconds();
-	  // console.log(Date.UTC(nowYear, nowMoth, nowDay, nowHour,nowMinute + 10,nowSecond));
-	  let expired = Date.UTC(nowYear, nowMoth, nowDay, nowHour, nowMinute + 10, nowSecond) + '';
-	  // console.log(Number(expired.substr(0,10)));
-	  return Number(expired.substr(0, 10));
+    let date = new Date();
+    let nowYear = date.getFullYear();
+    let nowMoth = date.getMonth() + 1;
+    let nowDay = date.getDate();
+    let nowHour = date.getHours();
+    let nowMinute = date.getMinutes();
+    let nowSecond = date.getSeconds();
+    let expired = Date.UTC(nowYear, nowMoth, nowDay, nowHour, nowMinute + 10, nowSecond) + '';
+    return Number(expired.substr(0, 10));
   }
   // 加密
   restFulSha(RequestMethod, url, topbabysecret) {
-    let expired   = this.getNowUtcTime();
-    url           = RequestMethod + "\n" + url + "\n" + expired + "\n";
+    let expired = this.getNowUtcTime();
+    url = RequestMethod + "\n" + url + "\n" + expired + "\n";
     let signature = CryptoJS.HmacSHA1(url, topbabysecret);
-    signature     = Base64.Base64.encode(signature);
-    let obj       = {
+    signature = Base64.Base64.encode(signature);
+    let obj = {
       expires: expired,
       signature: signature
     }

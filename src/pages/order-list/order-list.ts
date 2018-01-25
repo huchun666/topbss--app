@@ -6,7 +6,6 @@ import { AppService, AppConfig } from '../../app/app.service';
   selector: 'order-list',
   templateUrl: 'order-list.html'
 })
-
 export class OrderList {
   @ViewChild(Content) content: Content;
   dateStart: string = '';
@@ -53,7 +52,7 @@ export class OrderList {
     this.load = AppConfig.load;
   }
   // 每次进入页面的时候都会执行
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.start = 0;
     this.paramsDate = '';
     this.paramsStatus = '';
@@ -62,19 +61,9 @@ export class OrderList {
     this.dateStartMax = this.appService.reserveDate();
     this.dateEndMax = this.appService.reserveDate();
     this.currentStatus = this.orderStatusList[0].status;
-    // this.events.subscribe('order:status', (orderStatus) => {
-    //   this.currentStatus = orderStatus;
-    //   this.paramsStatus += '&status=' + orderStatus;
-    // });
     this.orderList = [];
     this.getOrderList();
   }
-  // 每次离开页面的时候执行
-  // ionViewDidLeave(){
-  //   this.events.unsubscribe('order:status', () => {
-  //     console.log('did unsubscribe');
-  //   });
-  // }
   // 获取订单列表
   getOrderList() {
     this.loadingShow = true;
@@ -90,28 +79,35 @@ export class OrderList {
     this.appService.httpGet(url).then(data => {
       this.loadingShow = false;
       if (this.start < data.count) {
-        this.showNoMore = false;
+        if (this.pageSize >= data.count) {
+          this.showNoMore = true;
+          this.showInfinite = false;
+        } else {
+          this.showNoMore = false;
+          this.showInfinite = true;
+        }
         this.noData = false;
         this.start += this.pageSize;
-        this.showInfinite = true;
         if (this.up) {
           this.orderList.push(...data.data);
           for (let i = 0; i < this.orderList.length; i++) {
             this.isShowDetail[i] = false;
-          }  
+          }
         } else if (this.down) {
           this.orderList = data.data;
           for (let i = 0; i < this.orderList.length; i++) {
             this.isShowDetail[i] = false;
-          }  
+          }
         }
       } else if (data.count == 0) {
         this.noData = true;
         this.showNoMore = false;
+        this.showInfinite = false;
         this.orderList = [];
-      } else if (data.data.length == 0) {
+      } else if (data.data.length == 0 && data.count != 0) {
         this.noData = false;
         this.showNoMore = true;
+        this.showInfinite = false;
       }
     }).catch(error => {
       this.appService.getToken(error, () => {
@@ -119,8 +115,10 @@ export class OrderList {
       });
       this.orderList = [];
       this.loadingShow = false;
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
       console.log(error);
     })
   }
@@ -171,7 +169,6 @@ export class OrderList {
     this.dateEnd = '';
     this.dateStartMax = this.appService.reserveDate();;
   }
-
   // 下拉刷新请求数据
   doRefresh(refresher) {
     this.start = 0;
@@ -184,7 +181,6 @@ export class OrderList {
     }, AppConfig.LOAD_TIME);
     this.showNoMore = false;
   }
-
   // 上拉加载更多 请求数据
   loadMore(infiniteScroll) {
     let url = `${AppConfig.API.getOrderList}?userType=B&start=${this.start}&limit=${this.pageSize}`;
@@ -208,13 +204,13 @@ export class OrderList {
       this.appService.getToken(error, () => {
         this.loadMore(infiniteScroll);
       });
-      this.showInfinite = false;
-      infiniteScroll.complete();
-      this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      if(error.error != "invalid_token") {
+        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        infiniteScroll.complete();
+      }
       console.log(error);
     })
   }
-
   //请求失败后刷新
   requestDefeatRefresh() {
     this.requestDefeat = false;
@@ -223,5 +219,4 @@ export class OrderList {
     this.orderList = [];
     this.getOrderList();
   }
-
 }

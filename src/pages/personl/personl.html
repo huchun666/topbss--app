@@ -13,8 +13,7 @@
         <ion-col col-8>
           <h2>{{ userCurrent.cellphone }}</h2>
           <button ion-button outline round color="light" (touchstart)="redirectPage(pageList.myCode)">
-            <img src="./assets/image/qrcode.png" alt="我的">
-            我的二维码
+            <img src="./assets/image/qrcode.png" alt="我的"> 我的二维码
           </button>
         </ion-col>
       </ion-row>
@@ -26,12 +25,15 @@
       <span class="showTotal" (touchstart)="showMoney()">
         {{ showText }}
       </span>
-      <span class="showImg"><img [src]="'./assets/image/'+showImg" alt="我的资金"></span>
+      <span class="showImg">
+        <img [src]="'./assets/image/'+showImg" alt="我的资金">
+      </span>
     </h2>
     <ion-grid>
       <ion-row>
         <ion-col>
-          <div class="total"><span>￥</span>{{ userAccount.balance }}</div>
+          <div class="total">
+            <span>￥</span>{{ userAccount.balance }}</div>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -58,17 +60,31 @@
     </ion-grid>
     <div class="withdrawal-record" (click)="redirectPage(pageList.withdrawRecord, userAccount.withdrawAmount)">
       提现记录
-      <span><img src="./assets/image/in.png" alt="提现记录"></span>
+      <span>
+        <img src="./assets/image/in.png" alt="提现记录">
+      </span>
     </div>
     <div class="withdrawal-record" (click)="redirectPage(pageList.addAccount, null, userCurrent)">
       收款账户
-      <span><img src="./assets/image/in.png" alt="收款账户"></span>
+      <span>
+        <img src="./assets/image/in.png" alt="收款账户">
+      </span>
     </div>
   </div>
   <div class="help">
     <ul>
-      <li (click)="redirectPage(pageList.help)">帮助中心<span><img src="./assets/image/in.png" alt="帮助中心"></span></li>
-      <li><a href="tel:4008916161" style="display: block;">客服热线<span>400-891-6161<img src="./assets/image/in.png" alt="客服热线"></span></a></li>
+      <li (click)="redirectPage(pageList.help)">帮助中心
+        <span>
+          <img src="./assets/image/in.png" alt="帮助中心">
+        </span>
+      </li>
+      <li>
+        <a href="tel:4008916161" style="display: block;">客服热线
+          <span>400-891-6161
+            <img src="./assets/image/in.png" alt="客服热线">
+          </span>
+        </a>
+      </li>
     </ul>
   </div>
   <button class="btn-logout" ion-button (click)="logOut()">退出登录</button>

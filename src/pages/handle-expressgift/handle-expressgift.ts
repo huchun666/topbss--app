@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, AlertController, Content } from 'ionic-angular';
+import { Content } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
   selector: 'handle-expressgift',
@@ -19,8 +19,6 @@ export class HandleExpressgift {
   requestDefeat: Boolean = false;
   showInfinite: Boolean = false;
   constructor(
-    public navCtrl: NavController,
-    public alertCtrl: AlertController,
     public appService: AppService,
   ) {
     // 获取已兑换快递赠品列表
@@ -28,15 +26,14 @@ export class HandleExpressgift {
     this.up = false;
     this.load = AppConfig.load;
   }
-  ionViewDidEnter(){
-    setTimeout(this.getHandleExpressGiftList(),100);
+  ionViewDidEnter() {
+    setTimeout(this.getHandleExpressGiftList(), 100);
   }
   getHandleExpressGiftList() {
     let url = `${AppConfig.API.getGiftList}?type=3&start=${this.start}&limit=${this.limit}`;//brandshopSeq=${this.brandshopSeqId}
     this.appService.httpGet(url).then(data => {
       this.loadingShow = false;
       if (data.count == 0) {
-        //空空如也
         this.noData = true;
       } else {
         this.noData = false;
@@ -61,11 +58,12 @@ export class HandleExpressgift {
       this.handleExpressGiftArray = [];
       this.loadingShow = false;
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     });
   }
-
   // 下拉刷新请求数据
   refreshGetHandleExpressGiftList(refresher) {
     this.start = 0;
@@ -77,7 +75,6 @@ export class HandleExpressgift {
     this.appService.httpGet(url).then(data => {
       refresher.complete();
       if (data.count == 0) {
-        //空空如也
         this.noData = true;
       } else {
         this.noData = false;
@@ -96,11 +93,12 @@ export class HandleExpressgift {
       this.handleExpressGiftArray = [];
       refresher.complete();
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     });
   }
-
   // 上拉刷新请求数据
   infiniteGetHandleExpressGiftList(infiniteScroll) {
     this.down = false;
@@ -109,7 +107,6 @@ export class HandleExpressgift {
     this.appService.httpGet(url).then(data => {
       infiniteScroll.complete();
       if (data.count == 0) {
-        //空空如也
         this.noData = true;
       } else {
         this.noData = false;
@@ -124,12 +121,13 @@ export class HandleExpressgift {
       this.appService.getToken(error, () => {
         this.infiniteGetHandleExpressGiftList(infiniteScroll);
       });
-      infiniteScroll.complete();
       console.log(error);
-      this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      if(error.error != "invalid_token") {
+        infiniteScroll.complete();
+        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      }
     });
   }
-
   //请求失败后刷新
   requestDefeatRefresh() {
     this.requestDefeat = false;

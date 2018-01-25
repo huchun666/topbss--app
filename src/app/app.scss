@@ -276,3 +276,20 @@ ion-loading {
 .header-title-hidden {
   display: none;
 }
+@media only screen and (min-height: 600px) and (min-width: 768px) {
+  .modal-wrapper {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+  }
+}
+.toolbar-ios {
+  height: 34px + $cordova-ios-statusbar-padding;
+  padding-top: $cordova-ios-statusbar-padding;
+}
+.toolbar-title-ios {
+  padding-top: $cordova-ios-statusbar-padding;
+}
+

@@ -4,59 +4,27 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <div class="order-title">
-    <img class="my-picture" src="./assets/image/store.png" alt="店铺">
-    <h2>{{ orderDetail.brandshopName }}</h2>
-    <span>{{ orderDetail.orderNumber }}</span>
-  </div>
-  <div class="order-list">
-
-    <div class="order-item" *ngFor="let product of orderDetail.productList">
-      <dl>
-        <dt>
-          <img class="my-picture" [src]="product.image" alt="小裙子">
-        </dt>
-        <dd class="product-title">{{ product.name }}</dd>
-        <dd class="sku-list">
-          <span *ngFor="let sku of product.skuList">{{ sku.value }}</span>
-        </dd>
-        <dd class='price'>{{ product.price }}</dd>
-        <dd class="count">{{ product.count }}</dd>
-      </dl>
+  <div *ngIf="orderDetail.orderSeq">
+    <div class="order-title">
+      <img class="my-picture" src="./assets/image/store.png" alt="店铺">
+      <h2>{{ orderDetail.brandshopName }}</h2>
+      <span>{{ orderDetail.orderId }}</span>
     </div>
-
-    <!-- <div class="order-item">
-      <dl>
-        <dt>
-          <img class="my-picture" src="./assets/image/productimg.png" alt="小裙子">
-        </dt>
-        <dd class="product-title">可爱的小裙子 厚实的 保暖 秋冬季</dd>
-        <dd class="sku-list">
-          <span>140</span>
-          <span>蓝色</span>
-          <span>无袖</span>
-        </dd>
-        <dd class='price'>￥128.66</dd>
-        <dd class="count">X4</dd>
-      </dl>
+    <div class="order-list">
+      <div class="order-item" *ngFor="let product of orderDetail.orderItemProductSkuDTOS">
+        <dl>
+          <dt>
+            <img class="my-picture" [src]="product.productSkuDTO.fileSeq | productSkuDTOImage" alt="小裙子">
+          </dt>
+          <dd class="product-title">{{ product.productSkuDTO.productName }}</dd>
+          <dd class="sku-list">
+            <span *ngFor="let sku of product.productSkuDTO.attrValueList">{{ sku.attrValue }}</span>
+          </dd>
+          <dd class='price'>{{ product.unitPrice }}</dd>
+          <dd class="count">X {{ product.number }}</dd>
+        </dl>
+      </div>
     </div>
-
-    <div class="order-item">
-      <dl>
-        <dt>
-          <img class="my-picture" src="./assets/image/productimg.png" alt="小裙子">
-        </dt>
-        <dd class="product-title">可爱的小裙子 厚实的 保暖 秋冬季</dd>
-        <dd class="sku-list">
-          <span>140</span>
-          <span>蓝色</span>
-          <span>无袖</span>
-        </dd>
-        <dd class='price'>￥128.66</dd>
-        <dd class="count">X4</dd>
-      </dl>
-    </div> -->
-
+    <button class="btn-confirm" ion-button (click)="presentConfirm()" *ngIf="orderDetail.status=='1'">确认提货</button>
   </div>
-  <button class="btn-confirm" ion-button (click)="presentConfirm()">确认提货</button>
 </ion-content>

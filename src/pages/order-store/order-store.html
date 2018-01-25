@@ -4,11 +4,9 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-
   <ion-refresher (ionRefresh)="refreshGetOrderStoreList($event)" *ngIf="!loadingShow">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
   <ion-list>
     <!-- loading -->
     <div class="loading-wrapper" *ngIf="loadingShow">
@@ -27,20 +25,19 @@
           <span class="btn-add" (touchstart)="addCount(i,$event)">+</span>
           <span class="btn-remove" [ngClass]="{changeGray: single.productNum | changeGray}" (touchstart)="removeCount(i,$event)">-</span>
           <div class="add-count">
-            <input (change)="resetProductNum(i)" [(ngModel)]="single.productNum"  type="number">
+            <input class="total-input-number" (change)="resetProductNum(i)" [(ngModel)]="single.productNum" type="number">
           </div>
         </div>
         <div class="total">
-            <div class="total-text">商品总额</div>
-            <div class="total-input">
-              <input (change)="resetCount(i,$event)" [(ngModel)]="single.itemPrice"  type="number">
-            </div>
+          <div class="total-text">商品总额</div>
+          <div class="total-input">
+            <input class="total-input-count" (change)="resetCount(i,$event)" [(ngModel)]="single.itemPrice" type="number">
+          </div>
         </div>
         <div class="remark">
-          <input (change)="resetCount(i)" placeholder="备注一下商品信息吧"  type="text" [(ngModel)]="single.remark">
+          <input (change)="resetCount(i)" placeholder="备注一下商品信息吧" type="text" [(ngModel)]="single.remark">
         </div>
       </ion-item>
-      
       <ion-item-options side="right">
         <button class="btn-delete" ion-button color="danger" (click)="delete(i)">
           <ion-icon name="trash"></ion-icon>
@@ -48,26 +45,20 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-    
   </ion-list>
-
-  <div class="no-data" *ngIf = "noData">
-		<img src="./assets/image/nodata.png" alt="">
-		<p>空空如也</p>
+  <div class="no-data" *ngIf="noData">
+    <img src="./assets/image/nodata.png" alt="">
+    <p>空空如也</p>
   </div>
-  <div class="request-defeat" *ngIf = "requestDefeat">
-		<img src="./assets/image/requestDefeat.png" alt="">
+  <div class="request-defeat" *ngIf="requestDefeat">
+    <img src="./assets/image/requestDefeat.png" alt="">
     <p>啊哦！页面走丢了</p>
     <button class="btn-request-defeat" ion-button full (touchstart)="requestDefeatRefresh()">
       刷新再找一找
     </button>
-	</div>
-  <button class="btn-confirm" ion-button full (touchstart)="addProductModal()" *ngIf = "confirmOrder">
+  </div>
+  <button class="btn-confirm" ion-button full (touchstart)="addProductModal()" *ngIf="confirmOrder">
     <span class="confirm">确认订单</span>
     <span>（总额：￥{{totalPriceFloat}}）</span>
   </button>
-
 </ion-content>
-
-
-        

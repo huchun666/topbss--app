@@ -15,6 +15,7 @@ award-tabs {
 			border-bottom: solid 4px transparent;
 			padding: 0!important;
 			margin: 0 1.5rem;
+			border-bottom: solid 4px #fff;
 			span {
 				font-size: 1.5rem!important;
 			}
@@ -123,6 +124,10 @@ award-tabs {
 				}
 			}
 		}
+  }
+  .filter-box.toolbar-ios {
+    top: 34px + $cordova-ios-statusbar-padding!important;
+    height: 5rem;
   }
   .withdraw-record {
 		color: #333;

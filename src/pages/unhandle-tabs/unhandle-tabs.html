@@ -12,7 +12,6 @@
   <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="!loadingShow">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
   <div class="selfGiftList" *ngIf="currentIndex == 0">
     <div class="gift-list">
       <!-- loading -->
@@ -42,7 +41,8 @@
         </dl>
         <div class="reserve-time" *ngIf="item.giftType=='0' && item.status=='2'">
           <div class="time-text">
-            <ion-datetime placeholder="会员预约到店时间" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" [(ngModel)]="item.reserveShopTime" min="{{reserveShopTimeMin}}" max="2099">
+            <ion-datetime placeholder="会员预约到店时间" cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD" [(ngModel)]="item.reserveShopTime"
+              min="{{reserveShopTimeMin}}" max="2099">
             </ion-datetime>
             <span class="clear" *ngIf="item.reserveShopTime" (click)="clearReserveArriveTime(i)">X</span>
           </div>
@@ -53,7 +53,6 @@
         <div class="reserve-time" *ngIf="item.giftType=='0' && item.status=='3'">
           <div class="show-time">预约到店时间：{{ item.reserveShopTime | date:'yyyy-MM-dd HH:mm:ss' }}</div>
         </div>
-
       </div>
       <div class="no-data" *ngIf="noData">
         <img src="./assets/image/nodata.png" alt="">
@@ -65,7 +64,7 @@
       <div class="btn-noMore" *ngIf="showNoMore">
         <span>—— 没有更多赠品了 ——</span>
       </div>
-      <div class="request-defeat" *ngIf = "requestDefeat">
+      <div class="request-defeat" *ngIf="requestDefeat">
         <img src="./assets/image/requestDefeat.png" alt="">
         <p>啊哦！页面走丢了</p>
         <button class="btn-request-defeat" ion-button full (touchstart)="requestDefeatRefreshSelfGift()">
@@ -79,9 +78,7 @@
     <div class="toTop" (click)="scrollTo()" *ngIf="toTop">
       <img src="./assets/image/toTop.png" alt="">
     </div>
-    
   </div>
-
   <div class="expressGiftList" *ngIf="currentIndex == 1">
     <div class="gift-list">
       <!-- loading -->
@@ -130,7 +127,7 @@
       <div class="btn-noMore" *ngIf="showNoMore">
         <span>—— 没有更多赠品了 ——</span>
       </div>
-      <div class="request-defeat" *ngIf = "requestDefeat">
+      <div class="request-defeat" *ngIf="requestDefeat">
         <img src="./assets/image/requestDefeat.png" alt="">
         <p>啊哦！页面走丢了</p>
         <button class="btn-request-defeat" ion-button full (touchstart)="requestDefeatRefreshExpressGift()">
@@ -141,9 +138,5 @@
         <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </div>
-    
-    
   </div>
-
-  
 </ion-content>

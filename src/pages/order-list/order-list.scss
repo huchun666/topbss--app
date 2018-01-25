@@ -3,7 +3,7 @@ order-list {
 		color: #fff;
 		position: absolute;
 		right: 1rem;
-		top: 12px;
+		bottom: 1rem;
   }
   .order-title {
 		background: #fff;
@@ -279,6 +279,10 @@ order-list {
 				}
 			}
 		}
+  }
+  .filter-box.toolbar-ios {
+    top: 34px + $cordova-ios-statusbar-padding!important;
+    height: 9rem;
   }
 }
 .has-refresher > .scroll-content {

@@ -13,7 +13,8 @@
   </div>
   <div *ngIf="accountContent && boundWechat">
     <div class="account-title">
-      <div class="binded"><img src="./assets/image/OK.png" alt="">已绑定微信</div>
+      <div class="binded">
+        <img src="./assets/image/OK.png" alt="">已绑定微信</div>
     </div>
     <div class="form-list">
       <ion-list>
@@ -30,10 +31,10 @@
         </ion-item>
         <div class='bind-error' *ngIf="isIDCard">*请输入正确的身份证号</div>
       </ion-list>
-    <button class="btn-bind" ion-button (click)="editCurrent()">确定</button>
+      <button class="btn-bind" ion-button (click)="editCurrent()">确定</button>
     </div>
   </div>
-  <div class="request-defeat" *ngIf = "requestDefeat">
+  <div class="request-defeat" *ngIf="requestDefeat">
     <img src="./assets/image/requestDefeat.png" alt="">
     <p>啊哦！页面走丢了</p>
     <button class="btn-request-defeat" ion-button full (touchstart)="getCurrent()">

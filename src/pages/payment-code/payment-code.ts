@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { App, NavController, NavParams, Events } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
@@ -34,18 +34,20 @@ export class PaymentCode {
     let loading = this.appService.loading();
     loading.present();
     let url = `${AppConfig.API.warehouseEmpty}`
-    this.appService.httpPut(url, null).then( data => {
-      if (data.type=="success") {
+    this.appService.httpPut(url, null).then(data => {
+      if (data.type == "success") {
         loading.dismiss();
         this.navCtrl.remove(this.navCtrl.length() - 2, 2);
       }
-    }).catch(error=>{
+    }).catch(error => {
       this.appService.getToken(error, () => {
         this.orderAgain();
       });
-      loading.dismiss();
       console.log(error);
-      this.appService.toast('操作失败', 1000, 'middle');
+      if (error.error != "invalid_token") {
+        this.appService.toast('操作失败', 1000, 'middle');
+        loading.dismiss();
+      }
     })
   }
   //关闭(完成)移除所有的view,直接显示home
@@ -56,19 +58,20 @@ export class PaymentCode {
   Interval() {
     var self = this;
     let url = `${AppConfig.API.checkStatus}?warehouseId=${this.warehouseId}`;
-    this.timer = window.setInterval(function() {
+    this.timer = window.setInterval(function () {
       self.appService.httpGet(url).then(data => {
-      if (data.status == 0 && !self.isOrderAgain) {
-        self.isStatus = true;
-        window.clearInterval(self.timer);
-        self.navCtrl.remove(0, self.navCtrl.length());
-        self.events.publish('check: status', self.isStatus);
-      }else {
-        self.isStatus = false;
-      }
-    }).catch(error => {
-      console.log(error);
-    })},1000);
+        if (data.status == 0 && !self.isOrderAgain) {
+          self.isStatus = true;
+          window.clearInterval(self.timer);
+          self.navCtrl.remove(0, self.navCtrl.length());
+          self.events.publish('check: status', self.isStatus);
+        } else {
+          self.isStatus = false;
+        }
+      }).catch(error => {
+        console.log(error);
+      })
+    }, 1000);
   }
   ionViewDidLeave() {
     window.clearInterval(this.timer);

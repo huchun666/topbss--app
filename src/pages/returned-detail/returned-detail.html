@@ -15,12 +15,12 @@
       <!-- 订单编号 -->
       <div class="order-title">
         <h2>订单编号：
-          <span>{{returnedDetail.orderReturn.returnOrderId}}</span>
+          <span>{{returnedDetail.order.orderId}}</span>
         </h2>
         <!--color auditing or pass -->
         <span [ngClass]="{auditStatus: true, pass:(orderStatus | setReturnOrderStatus).pass , auditing:(orderStatus | setReturnOrderStatus).audit} ">{{(orderStatus | setReturnOrderStatus).status}}</span>
       </div>
-      <!-- 商品1 -->
+      <!-- 商品 -->
       <div class="order-item">
         <dl>
           <dt>
@@ -35,7 +35,6 @@
           <dd class="count">X{{returnedDetail.itemProductSkuDTO.number}}</dd>
         </dl>
       </div>
-
       <div class="orderOperate">
         <dl>
           <dt>
@@ -44,7 +43,6 @@
         </dl>
       </div>
     </div>
-
     <div class="return-detail">
       <ul>
         <li>退货数量：{{returnedDetail.orderReturn.number}}</li>
@@ -60,6 +58,12 @@
         <li class="img-list" *ngIf="imageArray">
           <img [src]="itemImg | productSkuDTOImage" alt="" *ngFor="let itemImg of imageArray">
         </li>
+      </ul>
+    </div>
+    <div class="return-detail approval-user">
+      <ul>
+        <li>审核人员：{{returnedDetail.orderReturn.approvalUserName}}</li>
+        <li>确认收货人员：{{returnedDetail.orderReturn.receiveUserName}}</li>
       </ul>
     </div>
   </div>

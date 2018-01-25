@@ -10,10 +10,10 @@
   </ion-refresher>
   <div class="withdraw-record">
     <div class="withdraw-total">
-     <span *ngIf="isShow">总金额：￥ {{ sum }}</span>
+      <span *ngIf="isShow">总金额：￥ {{ sum }}</span>
     </div>
     <div class="record-list">
-      <div class="withdraw-item" *ngFor = "let item of awardOrder">
+      <div class="withdraw-item" *ngFor="let item of awardOrder">
         <ul>
           <li class='order-number'>订单编号：{{ item.relateId }}</li>
           <li class='base-number'>结算基数：￥{{ item.baseAmount }}</li>
@@ -37,10 +37,8 @@
       刷新再找一找
     </button>
   </div>
-  <ion-infinite-scroll  (ionInfinite)="loadMore($event)" *ngIf="awardOrder.length < count">
-      <ion-infinite-scroll-content
-        loadingSpinner="bubbles"
-        loadingText="加载中">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="awardOrder.length < count">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

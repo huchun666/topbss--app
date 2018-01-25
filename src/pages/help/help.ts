@@ -1,10 +1,9 @@
-import { Component} from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { Component } from '@angular/core';
 @Component({
   selector: 'help',
   templateUrl: 'help.html'
 })
 export class Help {
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {
+  constructor() {
   }
 }

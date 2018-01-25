@@ -2,7 +2,6 @@
   <ion-navbar>
     <ion-title text-center>已审核取消订单</ion-title>
   </ion-navbar>
-  
 </ion-header>
 <ion-content>
   <ion-refresher (ionRefresh)="refreshGetSelfGiftList($event)" *ngIf="!loadingShow">
@@ -23,7 +22,6 @@
         </h2>
         <span [ngClass]="{auditStatus: true, pass:(item.status | setCancelOrderStatus).pass , auditing:(item.status | setCancelOrderStatus).audit} ">{{(item.status | setCancelOrderStatus).status}}</span>
       </div>
-
       <div class="order-item" *ngFor="let single of item.itemList">
         <dl>
           <dt>
@@ -37,33 +35,30 @@
           <dd class="count">X{{ single.number }}</dd>
         </dl>
       </div>
-
       <div class="orderOperate">
         <dl>
           <dd class="total">{{item.totalNumber}}件商品，实付￥{{item.payAmount}}</dd>
           <dd class="member-phone">会员手机：{{item.memberMobile}}</dd>
+          <dd class="member-phone">审核人员：{{item.approvalName}}</dd>
         </dl>
       </div>
     </div>
-
-    <div class="no-data" *ngIf = "noData">
+    <div class="no-data" *ngIf="noData">
       <img src="./assets/image/nodata.png" alt="">
       <p>空空如也</p>
     </div>
-    <div class="btn-noMore" *ngIf = "showNoMore">
+    <div class="btn-noMore" *ngIf="showNoMore">
       <span>—— 没有更多信息了 ——</span>
     </div>
-    <div class="request-defeat" *ngIf = "requestDefeat">
+    <div class="request-defeat" *ngIf="requestDefeat">
       <img src="./assets/image/requestDefeat.png" alt="">
       <p>啊哦！页面走丢了</p>
       <button class="btn-request-defeat" ion-button full (touchstart)="requestDefeatRefresh()">
         刷新再找一找
       </button>
     </div>
-    <ion-infinite-scroll (ionInfinite)="infiniteGetSelfGiftList($event)" *ngIf = "!showNoMore && showInfinite">
+    <ion-infinite-scroll (ionInfinite)="infiniteGetSelfGiftList($event)" *ngIf="!showNoMore && showInfinite">
       <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
   </div>
-
 </ion-content>

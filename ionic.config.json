@@ -6,45 +6,5 @@
     "cordova": {}
   },
   "proxies": [
-    {
-      "path": "/account",
-      "proxyUrl": "http://192.168.31.232:8082/account"
-    },
-    {
-      "path": "/uaa",
-      "proxyUrl": "http://192.168.31.232:8082/uaa"
-    },
-    {
-      "path": "/demo-resource-server",
-      "proxyUrl": "http://192.168.31.172:8081/demo-resource-server"
-    },
-    {
-      "path": "/order",
-      "proxyUrl": "http://192.168.31.226:6002/order"
-    },
-    {
-      "path": "/product",
-      "proxyUrl": "http://192.168.31.215:6003/product"
-    },
-    {
-      "path": "/promotion",
-      "proxyUrl": "http://192.168.31.215:6004/promotion"
-    },
-    {
-      "path": "/connect",
-      "proxyUrl": "https://open.weixin.qq.com/connect"
-    },
-    {
-      "path": "/self",
-      "proxyUrl": "http%3a%2f%2f192.168.31.154%3a8100/self"
-    },
-    {
-      "path": "/sns",
-      "proxyUrl": "https://api.weixin.qq.com/sns"
-    },
-    {
-      "path": "/evercos",
-      "proxyUrl": "https://www.61topbaby.com/evercos"
-    }
   ]
 }

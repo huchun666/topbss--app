@@ -1,6 +1,6 @@
 import { Headers } from '@angular/http';
 import { Component} from '@angular/core';
-import { NavController, AlertController, NavParams, App } from 'ionic-angular';
+import { NavParams, App } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 import { TabsPage } from '../tabs/tabs';
 @Component({
@@ -26,8 +26,7 @@ export class UpdatePwd {
     pwd: ''
   };
   rememberPassword: Boolean;
-  constructor(public navCtrl: NavController, 
-    public alertCtrl: AlertController, 
+  constructor( 
     public navParams: NavParams,
     public appService: AppService,
     public app: App,
@@ -47,14 +46,12 @@ export class UpdatePwd {
     this.initialPwdBlur();
     this.newPwdBlur();
     if (!this.isInitialPwd && !this.isNewPwd && !this.isRepeatPwd && this.initialPwd != "" && this.newPwd != "" && this.repeatPwd != "") {
-      console.log("inter01")
       let loading = this.appService.loading();
       loading.present();
       let url = AppConfig.API.editPassword;
       let body = {
         password: this.newPwd
       };
-      console.log(this.withTokenHeaders)
       this.appService.httpPostHeader(url, body, this.withTokenHeaders).then(data => {
         loading.dismiss();
         this.user = {
@@ -64,6 +61,8 @@ export class UpdatePwd {
         if (!this.rememberPassword) {
           this.user.pwd = ""; 
         };
+        let newDateMS = (new Date()).getTime() + data.expires_in*1000 - AppConfig.RESERVED_TIME;
+        this.appService.setItem("newDateMS", newDateMS);
         this.appService.setItem("user", JSON.stringify(this.user));
         this.appService.setItem("tpb_token", this.tpb_token);
         this.appService.setItem("refresh_token", this.refresh_token);

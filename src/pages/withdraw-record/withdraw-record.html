@@ -15,21 +15,21 @@
   </ion-refresher>
   <div class="withdraw-record">
     <div class="withdraw-total" *ngIf="withdrawAmount > 0">
-     提现总计：￥ {{ withdrawAmount }}
+      提现总计：￥ {{ withdrawAmount }}
     </div>
   </div>
   <div class="record-list">
-      <div class="withdraw-item" *ngFor="let item of withdrawList; let i = index">
-          <ul>
-            <li class="money">
-              提现金额：￥{{ item.realAmount }}
-            </li>
-            <li class='date'>
-              提现日期：{{ item.createTime | date:'yyyy.MM.dd' }}
-              <span [ngClass]="{status:true, fail: !(item.status | setWithdrawStatus).pass, pass: (item.status | setWithdrawStatus).pass }">{{ (item.status | setWithdrawStatus).status }}</span>
-            </li>
-          </ul>
-        </div>
+    <div class="withdraw-item" *ngFor="let item of withdrawList; let i = index">
+      <ul>
+        <li class="money">
+          提现金额：￥{{ item.realAmount }}
+        </li>
+        <li class='date'>
+          提现日期：{{ item.createTime | date:'yyyy.MM.dd' }}
+          <span [ngClass]="{status:true, fail: !(item.status | setWithdrawStatus).pass, pass: (item.status | setWithdrawStatus).pass }">{{ (item.status | setWithdrawStatus).status }}</span>
+        </li>
+      </ul>
+    </div>
   </div>
   <div class="no-data" *ngIf="isEmpty">
     <img src="./assets/image/nodata.png" alt="">
@@ -45,11 +45,8 @@
       刷新再找一找
     </button>
   </div>
-  <ion-infinite-scroll  (ionInfinite)="loadMore($event)" *ngIf="withdrawList.length < count">
-      <ion-infinite-scroll-content
-        loadingSpinner="bubbles"
-        loadingText="加载中">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="withdrawList.length < count">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

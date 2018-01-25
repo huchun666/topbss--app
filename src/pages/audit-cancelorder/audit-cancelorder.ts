@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
   selector: 'audit-cancelorder',
@@ -19,8 +18,6 @@ export class AuditCancelorder {
   requestDefeat: Boolean = false;
   showInfinite: Boolean = false;
   constructor(
-    public navCtrl: NavController,
-    public alertCtrl: AlertController,
     public appService: AppService) {
     this.start = 0;
     this.down = true;
@@ -31,7 +28,7 @@ export class AuditCancelorder {
   getAuditCancelorder() {
     // 待审核已取消订单 请求数据
     let url = `${AppConfig.API.getCancelorder}?deliveryType=1&status=1&start=${this.start}&limit=${this.limit}`;
-    this.appService.httpGet(url).then( data => {
+    this.appService.httpGet(url).then(data => {
       this.loadingShow = false;
       if (data.count == 0 && this.auditCancelorderArray.length == 0) {
         //空空如也
@@ -58,11 +55,12 @@ export class AuditCancelorder {
       this.auditCancelorderArray = [];
       this.loadingShow = false;
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     });
   }
-
   // 下拉刷新请求数据
   refreshGetSelfGiftList(refresher) {
     this.start = 0;
@@ -76,13 +74,13 @@ export class AuditCancelorder {
       if (data.count == 0) {
         //空空如也
         this.noData = true;
-      }else {
+      } else {
         this.noData = false;
         this.showInfinite = true;
         if (data.data.length != 0) {
           this.auditCancelorderArray = data.data;
           this.start += this.limit;
-        }else {
+        } else {
           this.showNoMore = true;
         }
       }
@@ -93,42 +91,44 @@ export class AuditCancelorder {
       this.auditCancelorderArray = [];
       refresher.complete();
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     });
   }
-
   // 上拉刷新请求数据
   infiniteGetSelfGiftList(infiniteScroll) {
     this.down = false;
     this.up = true;
     let url = `${AppConfig.API.getCancelorder}?deliveryType=1&status=1&start=${this.start}&limit=${this.limit}`
     this.appService.httpGet(url).then(data => {
-      infiniteScroll.complete();
       if (data.count == 0) {
         //空空如也
         this.noData = true;
-      }else {
+      } else {
         this.noData = false;
         if (data.data.length != 0) {
           this.auditCancelorderArray.push(...data.data);
           this.start += this.limit;
-        }else {
+        } else {
           this.showNoMore = true;
         }
       }
+      infiniteScroll.complete();
     }).catch(error => {
       this.appService.getToken(error, () => {
         this.infiniteGetSelfGiftList(infiniteScroll);
       });
-      infiniteScroll.complete();
       console.log(error);
-      this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      if(error.error != "invalid_token") {
+        infiniteScroll.complete();
+        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      }
     });
   }
-
-	//请求失败后刷新
-	requestDefeatRefresh() {
+  //请求失败后刷新
+  requestDefeatRefresh() {
     this.requestDefeat = false;
     this.loadingShow = true;
     this.start = 0;

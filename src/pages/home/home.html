@@ -5,9 +5,8 @@
 </ion-header>
 <ion-content>
   <ion-toolbar>
-	  <img class="logo-img" src="./assets/image/top.png" alt="淘璞帮">
-		<img class="logo-text" src="./assets/image/tpb.png" alt="淘璞帮">
-		<!-- <img class="logo-info" src="./assets/image/info.png" alt="淘璞帮"> -->
+    <img class="logo-img" src="./assets/image/top.png" alt="淘璞帮">
+    <img class="logo-text" src="./assets/image/tpb.png" alt="淘璞帮">
   </ion-toolbar>
   <div class="menu-list">
     <ion-grid>
@@ -32,9 +31,15 @@
       <ion-row>
         <ion-col>
           <dl>
-            <dt class="order-title">待审核订单<span>{{ cancelOrderCount + returnOrderCount }}</span></dt>
-            <dd>取消订单<span>({{ cancelOrderCount }})</span></dd>
-            <dd>退货订单<span>({{ returnOrderCount }})</span></dd>
+            <dt class="order-title">待审核订单
+              <span>{{ cancelOrderCount + returnOrderCount }}</span>
+            </dt>
+            <dd>取消订单
+              <span>({{ cancelOrderCount }})</span>
+            </dd>
+            <dd>退货订单
+              <span>({{ returnOrderCount }})</span>
+            </dd>
           </dl>
         </ion-col>
         <ion-col>
@@ -48,9 +53,15 @@
       <ion-row>
         <ion-col>
           <dl>
-            <dt class="gift-title">待处理赠品<span>{{ selfGiftCount + expressgiftCount }}</span></dt>
-            <dd>自提赠品<span>({{ selfGiftCount }})</span></dd>
-            <dd>快递赠品<span>({{ expressgiftCount }})</span></dd>
+            <dt class="gift-title">待处理赠品
+              <span>{{ selfGiftCount + expressgiftCount }}</span>
+            </dt>
+            <dd>自提赠品
+              <span>({{ selfGiftCount }})</span>
+            </dd>
+            <dd>快递赠品
+              <span>({{ expressgiftCount }})</span>
+            </dd>
           </dl>
         </ion-col>
         <ion-col>

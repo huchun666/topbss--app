@@ -4,7 +4,7 @@ import { AppService, AppConfig } from '../../app/app.service';
   templateUrl: 'order-detail.html',
   selector: 'withdraw-orderDetail'
 })
-export class OrderDetail{
+export class OrderDetail {
   /* pageSize, currentPage, orderDetail, sum, isShow
   *  每一页数量，当前页，处理订单列表，总金额，有无列表明细时的判断
   */
@@ -19,37 +19,38 @@ export class OrderDetail{
   isRefresh: boolean = true;
   load: any;
   isLoadingShow: boolean = false;
-  constructor(public appService: AppService){
+  constructor(public appService: AppService) {
     this.load = AppConfig.load;
     this.getAllData();
   }
   getOrderDetail() {
     this.isLoadingShow = true;
     let url = `${AppConfig.API.bonusList}?typeList=1&statusList=2&start=${(this.currentPage - 1) * this.pageSize}&limit=${this.pageSize}`;
-    this.appService.httpGet(url)
-      .then(data => {
-        if (data.data.length > 0) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
-          });
-          this.orderDetail.push(...data.data);
-        }
-        this.count = data.count;
-        this.isEmpty = data.count === 0 ? true : false;
-        this.requestFail = false;
-        this.isLoadingShow = false;
-      }).catch(error => {
-        this.appService.getToken(error, () => {
-          this.getOrderDetail();
+    this.appService.httpGet(url).then(data => {
+      if (data.data.length > 0) {
+        data.data.map(item => {
+          item.baseAmount = item.baseAmount.toFixed(2);
+          item.percent = item.percent;
+          item.amount = item.amount.toFixed(2);
+          item.returnAmount = item.returnAmount.toFixed(2);
         });
-        console.log(error);
-        this.requestFail = true;
-        this.isEmpty = false;
-        this.isLoadingShow = false;
+        this.orderDetail.push(...data.data);
+      }
+      this.count = data.count;
+      this.isEmpty = data.count === 0 ? true : false;
+      this.requestFail = false;
+      this.isLoadingShow = false;
+    }).catch(error => {
+      this.appService.getToken(error, () => {
+        this.getOrderDetail();
       });
+      console.log(error);
+      this.isEmpty = false;
+      this.isLoadingShow = false;
+      if (error.error != "invalid_token") {
+        this.requestFail = true;
+      }
+    });
   }
   /** 获取总金额 **/
   getBonusSum() {
@@ -71,7 +72,7 @@ export class OrderDetail{
   }
   /** 上拉翻页 **/
   loadMore(infiniteScroll) {
-    this.currentPage ++;
+    this.currentPage++;
     this.refreshPage(infiniteScroll);
   }
   /** 请求错误时，刷新页面 **/

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ModalController, AlertController, Content } from 'ionic-angular';
+import { NavController, Content } from 'ionic-angular';
 import { PaymentCode } from '../payment-code/payment-code';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
@@ -16,16 +16,16 @@ export class OrderStore {
   orderStoreDataArray: any = [];//得到的数据里面的data数组
   returnUrl: string;//返回得到的url字符串
   loadingShow: Boolean = true;
-  load: any = {}; 
+  load: any = {};
   totalPrice: number = 0;
   confirmOrder: Boolean = false;
   totalPriceFloat: any;
   overStock: Boolean;
   requestDefeat: Boolean = false;
+  totalPriceIsOrNull: Boolean = true;
+  totalNumberIsOrNull: Boolean = true;
   constructor(
     public navCtrl: NavController,
-    public modalCtrl: ModalController,
-    public alertCtrl: AlertController,
     public appService: AppService,
   ) {
     this.start = 0;
@@ -33,58 +33,55 @@ export class OrderStore {
     this.up = false;
     this.load = AppConfig.load;
     this.getOrderStore();
-    
   }
-
   getOrderStore() {
     let url = `${AppConfig.API.warehouseList}?start=${this.start}&limit=${this.limit}`;
-        this.appService.httpGet(url).then( data => {
-        this.loadingShow = false;
-        if (data.count == 0) {
-          //空空如也
-          this.noData = true;
-          this.confirmOrder = false;
-        }else {
-          this.noData = false;
-          this.confirmOrder = true;
-          if (this.up) {
-            this.orderStoreDataArray.push(...data.data);
-            this.start += this.limit;
-          }else if (this.down){
-            this.orderStoreDataArray = data.data;
-            this.start += this.limit;
-          }
-          this.orderStoreDataArray.map((item) => {
-            this.totalPrice += item.itemPrice;
-          })
-          this.orderStoreDataArray.map((item) => {
-            item.productSkuDTO.attrValueList.map((single) => {
-              if (single.fileSeq) {
-                item.productSkuDTO.fileSeq = single.fileSeq;
-                return
-              }
-            })
-          })
-          this.totalPriceFloat = parseFloat(`${this.totalPrice.toString()}`).toFixed(2);
+    this.appService.httpGet(url).then(data => {
+      this.loadingShow = false;
+      if (data.count == 0) {
+        this.noData = true;
+        this.confirmOrder = false;
+      } else {
+        this.noData = false;
+        this.confirmOrder = true;
+        if (this.up) {
+          this.orderStoreDataArray.push(...data.data);
+          this.start += this.limit;
+        } else if (this.down) {
+          this.orderStoreDataArray = data.data;
+          this.start += this.limit;
         }
-      
-      }).catch(error => {
-        this.appService.getToken(error, () => {
-          this.getOrderStore();
-        });
-        this.loadingShow = false;
-        this.requestDefeat = true;
-        console.log(error);
+        this.orderStoreDataArray.map((item) => {
+          this.totalPrice += item.itemPrice;
+        })
+        this.orderStoreDataArray.map((item) => {
+          item.productSkuDTO.attrValueList.map((single) => {
+            if (single.fileSeq) {
+              item.productSkuDTO.fileSeq = single.fileSeq;
+              return
+            }
+          })
+        })
+        this.totalPriceFloat = parseFloat(`${this.totalPrice.toString()}`).toFixed(2);
+      }
+    }).catch(error => {
+      this.appService.getToken(error, () => {
+        this.getOrderStore();
       });
+      this.loadingShow = false;
+      if(error.error != "invalid_token") {
+        this.requestDefeat = true;
+      }
+      console.log(error);
+    });
   }
-
   //更新的函数
   warehouseUpdate(index, addOrRemove) {
     let body = [];
     let url = AppConfig.API.warehouseUpdate;
     let loading = this.appService.loading();
     loading.present();
-    this.orderStoreDataArray.map(function(item) {
+    this.orderStoreDataArray.map(function (item) {
       let order = {};
       order['warehouseItemId'] = item.warehouseItemId;
       order['warehouseId'] = item.warehouseId;
@@ -93,8 +90,8 @@ export class OrderStore {
       order['remark'] = item.remark;
       body.push(order);
     })
-    this.appService.httpPut(url, body[index]).then( data => {
-      if (data.type=="success") {
+    this.appService.httpPut(url, body[index]).then(data => {
+      if (data.type == "success") {
         loading.dismiss();
         this.totalPrice = 0;
         this.orderStoreDataArray.map((item) => {
@@ -102,27 +99,28 @@ export class OrderStore {
         })
         this.totalPriceFloat = parseFloat(`${this.totalPrice.toString()}`).toFixed(2);
       }
-    }).catch(error=>{
+    }).catch(error => {
       this.appService.getToken(error, () => {
         this.warehouseUpdate(index, addOrRemove);
       });
       if (addOrRemove == "add") {
         this.orderStoreDataArray[index].productNum--;
-      }else if (addOrRemove == "remove") {
+      } else if (addOrRemove == "remove") {
         this.orderStoreDataArray[index].productNum++;
       }
-      loading.dismiss();
+      if(error.error != "invalid_token") {
+        this.appService.toast('更新失败，请稍后再试', 1000, 'middle');
+        loading.dismiss();
+      }
       console.log(error);
-      this.appService.toast('更新失败，请稍后再试', 1000, 'middle');
     })
   }
-
   //加
   addCount(index) {
     if (this.orderStoreDataArray[index].productSkuDTO.stock > this.orderStoreDataArray[index].productNum) {
       this.orderStoreDataArray[index].productNum++;
       this.warehouseUpdate(index, "add");
-    }else {
+    } else {
       this.appService.toast('不能添加更多宝贝了哦！', 1000, 'middle');
     }
   }
@@ -138,10 +136,10 @@ export class OrderStore {
     let loading = this.appService.loading();
     loading.present();
     let url = `${AppConfig.API.warehouseDeleteById}?id=${this.orderStoreDataArray[index].warehouseItemId}`;
-    this.appService.httpDelete(url).then( data => {
+    this.appService.httpDelete(url).then(data => {
       if (data.type == "success") {
         loading.dismiss();
-        this.orderStoreDataArray.splice(index,1);
+        this.orderStoreDataArray.splice(index, 1);
         this.totalPrice = 0;
         this.orderStoreDataArray.map((item) => {
           this.totalPrice += item.itemPrice;
@@ -156,27 +154,29 @@ export class OrderStore {
       this.appService.getToken(error, () => {
         this.delete(index);
       });
-      loading.dismiss();
       console.log(error);
-      this.appService.toast('删除失败，请稍后再试', 1000, 'middle');
+      if(error.error != "invalid_token") {
+        this.appService.toast('删除失败，请稍后再试', 1000, 'middle');
+        loading.dismiss();
+      }
     })
   }
   //失去焦点
   resetCount(index) {
-    if(this.orderStoreDataArray[index].itemPrice == null){
+    if (this.orderStoreDataArray[index].itemPrice == null) {
       this.orderStoreDataArray[index].itemPrice = 0;
       this.appService.toast('商品总额不能为空', 1000, 'middle');
-    } 
+    }
     this.warehouseUpdate(index, "reset");
   }
   resetProductNum(index) {
-    if(this.orderStoreDataArray[index].productNum <= 0){
+    if (this.orderStoreDataArray[index].productNum <= 0) {
       this.orderStoreDataArray[index].productNum = 1;
       this.appService.toast('商品数量不能为空', 1000, 'middle');
-    } 
+    }
     if (this.orderStoreDataArray[index].productSkuDTO.stock >= this.orderStoreDataArray[index].productNum) {
       this.warehouseUpdate(index, "reset");
-    }else {
+    } else {
       this.appService.toast('不能超出库存哦', 1000, 'middle');
       this.orderStoreDataArray[index].productNum = this.orderStoreDataArray[index].productSkuDTO.stock;
       this.warehouseUpdate(index, "reset");
@@ -184,27 +184,53 @@ export class OrderStore {
   }
   //确认订单
   addProductModal() {
-    let loading = this.appService.loading();
-    loading.present();
-    let url = `${AppConfig.API.warehouseGenerateCode}?warehouseId=${this.orderStoreDataArray[0].warehouseId}`;
-    this.appService.httpGetReturnData(url).then( data => {
-      loading.dismiss();
-      this.returnUrl = data['_body'];
-      this.navCtrl.push(PaymentCode,{
-        returnUrl: this.returnUrl,
-        totalPriceFloat: this.totalPriceFloat,
-        warehouseId: this.orderStoreDataArray[0].warehouseId
-      });
-    }).catch(error=>{
-      this.appService.getToken(error, () => {
-        this.addProductModal();
-      });
-      loading.dismiss();
-      console.log(error);
-      this.appService.toast('操作失败，请稍后再试', 1000, 'middle');
-    })
+    this.totalPrice = 0;
+    let totalArr: any = document.getElementsByClassName("total-input-count");
+    let totalNumberArr: any = document.getElementsByClassName("total-input-number");
+    for (let i = 0; i < totalArr.length; i++) {
+      this.totalPrice += Number(totalArr[i].value);
+    }
+    for (let i = 0; i < totalArr.length; i++) {
+      if (totalArr[i].value === '') {
+        this.totalPriceIsOrNull = false;
+        return;
+      } else {
+        this.totalPriceIsOrNull = true;
+      }
+    }
+    for (let i = 0; i < totalNumberArr.length; i++) {
+      if (totalNumberArr[i].value === '') {
+        this.totalNumberIsOrNull = false;
+        return;
+      } else {
+        this.totalNumberIsOrNull = true;
+      }
+    }
+    if (this.totalPriceIsOrNull && this.totalNumberIsOrNull) {
+      this.totalPriceFloat = parseFloat(`${this.totalPrice.toString()}`).toFixed(2);
+      let loading = this.appService.loading();
+      loading.present();
+      let url = `${AppConfig.API.warehouseGenerateCode}?warehouseId=${this.orderStoreDataArray[0].warehouseId}`;
+      this.appService.httpGetReturnData(url).then(data => {
+        loading.dismiss();
+        this.returnUrl = data['_body'];
+        this.navCtrl.push(PaymentCode, {
+          returnUrl: this.returnUrl,
+          totalPriceFloat: this.totalPriceFloat,
+          warehouseId: this.orderStoreDataArray[0].warehouseId
+        });
+      }).catch(error => {
+        this.appService.getToken(error, () => {
+          this.addProductModal();
+        });
+        console.log(error);
+        if(error.error != "invalid_token") {
+          this.appService.toast('操作失败，请稍后再试', 1000, 'middle');
+          loading.dismiss();
+        }
+      })
+    }
   }
-
   // 下拉刷新请求数据
   refreshGetOrderStoreList(refresher) {
     this.start = 0;
@@ -213,28 +239,28 @@ export class OrderStore {
     this.requestDefeat = false;
     this.noData = false;
     let url = `${AppConfig.API.warehouseList}?start=${this.start}&limit=${this.limit}`;
-    this.appService.httpGet(url).then( data => {
+    this.appService.httpGet(url).then(data => {
       refresher.complete();
       if (data.count == 0) {
         //空空如也
         this.noData = true;
-      }else {
+      } else {
         this.noData = false;
         this.orderStoreDataArray = data.data;
         this.start += this.limit;
       }
-    
     }).catch(error => {
       this.appService.getToken(error, () => {
         this.refreshGetOrderStoreList(refresher);
       });
       this.orderStoreDataArray = [];
-      refresher.complete();
+      if(error.error != "invalid_token") {
+        refresher.complete();
+        this.requestDefeat = true;
+      }
       console.log(error);
-      this.requestDefeat = true;
     });
   }
-
   //请求失败后刷新
   requestDefeatRefresh() {
     this.requestDefeat = false;

@@ -6,16 +6,16 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Dialogs } from '@ionic-native/dialogs';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
-import { 
-  FilterStatusPipe, 
+import { Network } from '@ionic-native/network';
+import {
+  FilterStatusPipe,
   FilterReturnStatusPipe,
   FilterCancelStatusPipe,
   FilterWithdrawStatusPipe,
   FilterGiftTypePipe,
-  FilterHandleGiftTypePipe, 
-  IsOrIsnotInvalidAttrValuePipe, 
-  InvalidAttrValueClassPipe, 
+  FilterHandleGiftTypePipe,
+  IsOrIsnotInvalidAttrValuePipe,
+  InvalidAttrValueClassPipe,
   ChangeGrayPipe,
   OverStockPipe,
   ProductSkuDTOImagePipe,
@@ -23,7 +23,6 @@ import {
   HandleGiftImagePipe
 } from './app.pipe';
 import { QRCodeModule } from 'angular2-qrcode';
-
 import { Login } from '../pages/login/login';
 import { Forget } from '../pages/forget/forget';
 import { UpdatePwd } from '../pages/update-pwd/update-pwd';
@@ -39,14 +38,10 @@ import { OrderStore } from '../pages/order-store/order-store';
 import { PaymentCode } from '../pages/payment-code/payment-code';
 import { UnauditTabs } from '../pages/unaudit-tabs/unaudit-tabs';
 import { UnhandleTabs } from '../pages/unhandle-tabs/unhandle-tabs';
-import { UnauditCancelorder } from '../pages/unaudit-cancelorder/unaudit-cancelorder';
-import { UnauditReturnorder } from '../pages/unaudit-returnorder/unaudit-returnorder';
 import { AuditCancelorder } from '../pages/audit-cancelorder/audit-cancelorder';
 import { AuditReturnorder } from '../pages/audit-returnorder/audit-returnorder';
 import { ReturnDetail } from '../pages/return-detail/return-detail';
 import { ReturnedDetail } from '../pages/returned-detail/returned-detail';
-import { UnhandleExpressgift } from '../pages/unhandle-expressgift/unhandle-expressgift';
-import { UnhandleSelfgift } from '../pages/unhandle-selfgift/unhandle-selfgift';
 import { HandleSelfgift } from '../pages/handle-selfgift/handle-selfgift';
 import { HandleExpressgift } from '../pages/handle-expressgift/handle-expressgift';
 import { Withdraw } from '../pages/withdraw/withdraw';
@@ -63,7 +58,6 @@ import { BrandshopOrderList } from '../pages/brandshop-order-list/brandshop-orde
 import { OrderDetail } from '../pages/order-detail/order-detail';
 import { AwardDetail } from '../pages/award-detail/award-detail';
 import { DetailTabs } from '../pages/detail-tabs/detail-tabs';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 let componentsList = [
@@ -82,15 +76,11 @@ let componentsList = [
   OrderStore,
   PaymentCode,
   UnauditTabs,
-  UnauditCancelorder,
-  UnauditReturnorder,
   AuditCancelorder,
   AuditReturnorder,
   ReturnDetail,
   ReturnedDetail,
   UnhandleTabs,
-  UnhandleSelfgift,
-  UnhandleExpressgift,
   HandleSelfgift,
   HandleExpressgift,
   Withdraw,
@@ -110,12 +100,12 @@ let componentsList = [
 ];
 @NgModule({
   declarations: [
-    ...componentsList, 
-    FilterStatusPipe, 
+    ...componentsList,
+    FilterStatusPipe,
     FilterReturnStatusPipe,
     FilterCancelStatusPipe,
     FilterWithdrawStatusPipe,
-    FilterGiftTypePipe, 
+    FilterGiftTypePipe,
     FilterHandleGiftTypePipe,
     IsOrIsnotInvalidAttrValuePipe,
     InvalidAttrValueClassPipe,
@@ -132,7 +122,8 @@ let componentsList = [
     IonicModule.forRoot(MyApp, {
       backButtonText: '返回',
       modalEnter: 'modal-slide-in',
-      modalLeave: 'modal-slide-out'
+      modalLeave: 'modal-slide-out',
+      statusbarPadding: false
     }),
   ],
   bootstrap: [IonicApp],
@@ -144,7 +135,8 @@ let componentsList = [
     AppConfig,
     Dialogs,
     BarcodeScanner,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    Network
   ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,0 +1,238 @@
+[
+  {
+    "file": "assets/fonts/ionicons.eot",
+    "hash": "bdf1d30681cf87986c385eea78e8de9a"
+  },
+  {
+    "file": "assets/fonts/ionicons.scss",
+    "hash": "c1fdfabf9cbd412b444f064d27641f10"
+  },
+  {
+    "file": "assets/fonts/ionicons.svg",
+    "hash": "d9496a234c81179afbca6bf5959cc30a"
+  },
+  {
+    "file": "assets/fonts/ionicons.ttf",
+    "hash": "74c652671225d6ded874a648502e5f0a"
+  },
+  {
+    "file": "assets/fonts/ionicons.woff",
+    "hash": "81414686e99c00d2921e03dd53c0ab04"
+  },
+  {
+    "file": "assets/fonts/ionicons.woff2",
+    "hash": "311d81961c5880647fec7eaca1221b2a"
+  },
+  {
+    "file": "assets/fonts/noto-sans-bold.ttf",
+    "hash": "a165a42685795361b25593effb32fdb1"
+  },
+  {
+    "file": "assets/fonts/noto-sans-bold.woff",
+    "hash": "ce3d777f2c41cca1494021cfa3fcd72c"
+  },
+  {
+    "file": "assets/fonts/noto-sans-regular.ttf",
+    "hash": "2fd9c16b805724d590c0cff96da070a4"
+  },
+  {
+    "file": "assets/fonts/noto-sans-regular.woff",
+    "hash": "ce8ba1a4ff970db896192c41fc3c96b1"
+  },
+  {
+    "file": "assets/fonts/noto-sans.scss",
+    "hash": "47d5f7264952ccee8cead7b6dcb6d1bd"
+  },
+  {
+    "file": "assets/fonts/roboto-bold.ttf",
+    "hash": "1f4fd7e4df65487f07ba9148f7ca095d"
+  },
+  {
+    "file": "assets/fonts/roboto-bold.woff",
+    "hash": "43183beef21370d8a4b0d64152287eba"
+  },
+  {
+    "file": "assets/fonts/roboto-bold.woff2",
+    "hash": "28d80f43ae4cc35f19e1f1a6ab670f25"
+  },
+  {
+    "file": "assets/fonts/roboto-light.ttf",
+    "hash": "9ff15bd34ea83e4dd3f23c20c7f5090e"
+  },
+  {
+    "file": "assets/fonts/roboto-light.woff",
+    "hash": "7e2d32e7141050d758a38b4ec96390c0"
+  },
+  {
+    "file": "assets/fonts/roboto-light.woff2",
+    "hash": "a826ff848e9f52b1732fed7d154afa97"
+  },
+  {
+    "file": "assets/fonts/roboto-medium.ttf",
+    "hash": "a937e2cae14e68262a45aa91204c2fdf"
+  },
+  {
+    "file": "assets/fonts/roboto-medium.woff",
+    "hash": "0f3b7101a8adc1afe1fbe89775553c32"
+  },
+  {
+    "file": "assets/fonts/roboto-medium.woff2",
+    "hash": "b2c9c262e089411e20689ed393c00796"
+  },
+  {
+    "file": "assets/fonts/roboto-regular.ttf",
+    "hash": "07f8fb6acbabeb10d3fad9ab02d65e0b"
+  },
+  {
+    "file": "assets/fonts/roboto-regular.woff",
+    "hash": "f94d5e5102359961c44a1da1b58d37c9"
+  },
+  {
+    "file": "assets/fonts/roboto-regular.woff2",
+    "hash": "e6b9d54811307f98da62eae992ae05ba"
+  },
+  {
+    "file": "assets/fonts/roboto.scss",
+    "hash": "e7c30075bc0f0b11422bfbdb2236f9e7"
+  },
+  {
+    "file": "assets/icon/favicon.ico",
+    "hash": "0350f4b3a2067110b1e642ee5931a38a"
+  },
+  {
+    "file": "assets/image/applogo.png",
+    "hash": "00662885372683b9612b922c4145cb6e"
+  },
+  {
+    "file": "assets/image/bind.png",
+    "hash": "4f7718328fe5b7caecfdcd6151578707"
+  },
+  {
+    "file": "assets/image/creatorder.png",
+    "hash": "a15af0c19d2cd89354e6a9a393f05c2f"
+  },
+  {
+    "file": "assets/image/hide.png",
+    "hash": "3a1a4d37f0939bf1df374cb0fd44e700"
+  },
+  {
+    "file": "assets/image/imgvalidate.png",
+    "hash": "4bd87a790b2e74aebe893bbe85ba9e82"
+  },
+  {
+    "file": "assets/image/in.png",
+    "hash": "eb297a21beab7c70bc21f8df283963c2"
+  },
+  {
+    "file": "assets/image/info.png",
+    "hash": "29260ecb5b643630948c841a6d995279"
+  },
+  {
+    "file": "assets/image/logo.png",
+    "hash": "57707feb9d774ece7b81ea96610250ec"
+  },
+  {
+    "file": "assets/image/mycode.png",
+    "hash": "2b9973e30b6916d3632c7c0f4dd044b7"
+  },
+  {
+    "file": "assets/image/mypicture.png",
+    "hash": "b0d011168c80f18356f4b7a7e0689c9e"
+  },
+  {
+    "file": "assets/image/myqrcode.png",
+    "hash": "28cf52676c025f1a3ff1abc1fad48d29"
+  },
+  {
+    "file": "assets/image/nodata.png",
+    "hash": "08e8ee680cf921e7b0e7c32d30559e7d"
+  },
+  {
+    "file": "assets/image/OK.png",
+    "hash": "459130aff7f9d0fec5ce159696eed64b"
+  },
+  {
+    "file": "assets/image/order.png",
+    "hash": "a4bfe28d6f922ea36a480f339a798348"
+  },
+  {
+    "file": "assets/image/phone.png",
+    "hash": "b32400ce2c485a387d7dac7d636ee0a1"
+  },
+  {
+    "file": "assets/image/productimg.png",
+    "hash": "7065a6b6cde386f6916f604acb2f5c25"
+  },
+  {
+    "file": "assets/image/productimg2.png",
+    "hash": "53362912546f2a6a1ad50a289095a5e8"
+  },
+  {
+    "file": "assets/image/qrcode.png",
+    "hash": "c78acdba293325c1dfee342b79118c30"
+  },
+  {
+    "file": "assets/image/requestDefeat.png",
+    "hash": "e6e0f77514bb44730314eeaeeed0fda5"
+  },
+  {
+    "file": "assets/image/scan.png",
+    "hash": "e4e033c00a592128f81e29fd18c18081"
+  },
+  {
+    "file": "assets/image/show.png",
+    "hash": "da05cfcc230ffbd25a2582d296ebd975"
+  },
+  {
+    "file": "assets/image/store.png",
+    "hash": "696537a46b8c9c20630f0be73c502b39"
+  },
+  {
+    "file": "assets/image/top.png",
+    "hash": "14c04f0f718a27d88ef49950c0f5fa8a"
+  },
+  {
+    "file": "assets/image/toTop.png",
+    "hash": "7cd29edff36a32834f0001eed8ac6e10"
+  },
+  {
+    "file": "assets/image/tpb.png",
+    "hash": "a8773e45d36d8f15d3831b0197087ec0"
+  },
+  {
+    "file": "assets/image/wx.png",
+    "hash": "50678a93301a4da35dce1001e8a51637"
+  },
+  {
+    "file": "build/main.css",
+    "hash": "f792dca530182623d0c1290196bae801"
+  },
+  {
+    "file": "build/main.js",
+    "hash": "53c38eba9210def6820e6af784b58683"
+  },
+  {
+    "file": "build/polyfills.js",
+    "hash": "a0f85bbdf3767a0ba06226c4ba43053f"
+  },
+  {
+    "file": "build/sw-toolbox.js",
+    "hash": "2770efb889cc10c4de88d0b746c2a13c"
+  },
+  {
+    "file": "build/vendor.js",
+    "hash": "647c5e02cb495f533f998490f49353d5"
+  },
+  {
+    "file": "index.html",
+    "hash": "dfec44ef4a89944ff4f41de9ba74a303"
+  },
+  {
+    "file": "manifest.json",
+    "hash": "df9b99468d4bd4cf2fee5d24ed9badbf"
+  },
+  {
+    "file": "service-worker.js",
+    "hash": "6b5672d3b7adf00984523bbdf655cb92"
+  }
+]

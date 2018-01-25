@@ -1,0 +1,25 @@
+{
+    "android": {
+        "release": {
+            "keystore": "./keystores/topbaby.jks",
+            "storePassword": "topbaby@keystore",
+            "alias": "bsskey",
+            "password" : "topbss@key",
+            "keystoreType": "jks"
+        }
+    },
+    "ios": {
+        "debug": {
+            "codeSignIdentity": "iPhone Developer",
+            "developmentTeam": "DBL58R3A2B",
+            "packageType": "development",
+            "provisioningProfile": "78dc3085-418e-49c8-be2d-06f628188d66"
+        },
+        "release": {
+            "codeSignIdentity": "iPhone Distribution",
+            "developmentTeam": "DBL58R3A2B",
+            "packageType": "app-store",
+            "provisioningProfile": "2be51567-bd6f-4b9c-bb1e-ac0982e8806a"
+        }
+    }
+}

@@ -13,7 +13,7 @@
       <span *ngIf="isShow">总金额：￥ {{ sum }}</span>
     </div>
     <div class="record-list">
-      <div class="withdraw-item" *ngFor = "let item of awardDetail">
+      <div class="withdraw-item" *ngFor="let item of awardDetail">
         <ul>
           <li class='order-number'>
             <span *ngIf="item.type === 3">订单编号：{{ item.relateId }}</span>
@@ -21,8 +21,8 @@
           </li>
           <li class='date'>活动时间：{{ item.startTime | date:'yyyy.MM.dd' }}--{{ item.endTime | date:'yyyy.MM.dd' }} </li>
           <li class='base-number'>
-              <span *ngIf="item.type === 3">结算基数：￥{{ item.baseAmount }}</span>
-              <span *ngIf="item.type === 4">结算基数：——</span>
+            <span *ngIf="item.type === 3">结算基数：￥{{ item.baseAmount }}</span>
+            <span *ngIf="item.type === 4">结算基数：——</span>
           </li>
           <li class='percentage'>
             <span *ngIf="item.type === 3">奖励比例：{{ item.percent }}</span>
@@ -47,10 +47,8 @@
       刷新再找一找
     </button>
   </div>
-  <ion-infinite-scroll  (ionInfinite)="loadMore($event)" *ngIf="awardDetail.length < count">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="加载中">
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="awardDetail.length < count">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

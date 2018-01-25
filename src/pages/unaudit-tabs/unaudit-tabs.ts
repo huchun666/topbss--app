@@ -1,7 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController, Content, ModalController } from 'ionic-angular';
-import { UnauditCancelorder } from '../unaudit-cancelorder/unaudit-cancelorder';
-import { UnauditReturnorder } from '../unaudit-returnorder/unaudit-returnorder';
+import { NavParams, AlertController, Content, ModalController } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 import { AuditCancelorder } from '../audit-cancelorder/audit-cancelorder';
 import { AuditReturnorder } from '../audit-returnorder/audit-returnorder';
@@ -12,8 +10,6 @@ import { ReturnDetail } from '../return-detail/return-detail';
 })
 export class UnauditTabs {
   @ViewChild(Content) content: Content;
-  orderCancel = UnauditCancelorder;
-  orderReturn = UnauditReturnorder;
   cancelCount: string;
   returnCount: string;
   cancelOrderCount: number;
@@ -34,7 +30,6 @@ export class UnauditTabs {
   requestDefeat: Boolean = false;
   showInfinite: Boolean = false;
   constructor(
-    public navCtrl: NavController,
     public alertCtrl: AlertController,
     public navParams: NavParams,
     public appService: AppService,
@@ -92,11 +87,36 @@ export class UnauditTabs {
       this.unauditCancelorderArray = [];
       this.loadingShow = false;
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     })
   }
   //审核点击事件
+  auditOrderPost(index, isAgree) {
+    this.start = 0;
+    this.down = true;
+    this.up = false;
+    let loading = this.appService.loading();
+    loading.present();
+    let url = `${AppConfig.API.auditCancelOrder}?id=${this.unauditCancelorderArray[index].orderSeq}&isAgree=${isAgree}`;
+    this.appService.httpPost(url, null).then(data => {
+      if (data.type == 'success') {
+        loading.dismiss();
+        this.getUnauditCancelorder();
+      }
+    }).catch(error => {
+      this.appService.getToken(error, () => {
+        this.auditOrderPost(index, isAgree);
+      });
+      loading.dismiss();
+      console.log(error);
+      if (error.error != "invalid_token") {
+        this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
+      }
+    });
+  }
   auditOrder(index) {
     const alert = this.alertCtrl.create({
       message: `同意会员${this.unauditCancelorderArray[index].memberMobile}的订单${this.unauditCancelorderArray[index].orderId}取消申请？`,
@@ -104,45 +124,13 @@ export class UnauditTabs {
         {
           text: '拒绝',
           handler: () => {
-            this.start = 0;
-            this.down = true;
-            this.up = false;
-            // 点击拒绝后的执行代码
-            let loading = this.appService.loading();
-            loading.present();
-            let url = `${AppConfig.API.auditCancelOrder}?id=${this.unauditCancelorderArray[index].orderSeq}&isAgree=0`;
-            this.appService.httpPost(url, null).then(data => {
-              if (data.type == 'success') {
-                loading.dismiss();
-                this.getUnauditCancelorder();
-              }
-            }).catch(error => {
-              loading.dismiss();
-              console.log(error);
-              this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
-            });
+            this.auditOrderPost(index, 0);
           }
         },
         {
           text: '通过',
           handler: () => {
-            this.start = 0;
-            this.down = true;
-            this.up = false;
-            // 点击同意后的执行代码
-            let loading = this.appService.loading();
-            loading.present();
-            let url = `${AppConfig.API.auditCancelOrder}?id=${this.unauditCancelorderArray[index].orderSeq}&isAgree=1`;
-            this.appService.httpPost(url, null).then(data => {
-              if (data.type == 'success') {
-                loading.dismiss();
-                this.getUnauditCancelorder();
-              }
-            }).catch(error => {
-              loading.dismiss();
-              console.log(error);
-              this.appService.toast('操作失败', 1000, 'middle');
-            });
+            this.auditOrderPost(index, 1);
           }
         }
       ]
@@ -153,7 +141,6 @@ export class UnauditTabs {
     const orderModal = this.modalCtrl.create(AuditCancelorder);
     orderModal.present();
   }
-
   // 获取待审核退货订单列表
   getUnauditReturnorderList() {
     this.loadingShow = true;
@@ -189,9 +176,34 @@ export class UnauditTabs {
       this.unauditReturnorderArray = [];
       this.loadingShow = false;
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     })
+  }
+  confirmReturnPost(index) {
+    let loading = this.appService.loading();
+    loading.present();
+    let url = `${AppConfig.API.returnReceived}?id=${this.unauditReturnorderArray[index].orderReturnSeq}`;
+    this.appService.httpPost(url, null).then(data => {
+      loading.dismiss();
+      if (data.type == 'success') {
+        this.start = 0;
+        this.up = false;
+        this.down = true;
+        this.getUnauditReturnorderList();
+      }
+    }).catch(error => {
+      this.appService.getToken(error, () => {
+        this.confirmReturnPost(index);
+      });
+      loading.dismiss();
+      console.log(error);
+      if (error.error != "invalid_token") {
+        this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
+      }
+    });
   }
   // 处理订单操作
   confirmReturn(index) {
@@ -207,23 +219,7 @@ export class UnauditTabs {
         {
           text: '确认',
           handler: () => {
-            // 点击确认后的执行代码
-            let loading = this.appService.loading();
-            loading.present();
-            let url = `${AppConfig.API.returnReceived}?id=${this.unauditReturnorderArray[index].orderReturnSeq}`;
-            this.appService.httpPost(url, null).then(data => {
-              loading.dismiss();
-              if (data.type == 'success') {
-                this.start = 0;
-                this.up = false;
-                this.down = true;
-                this.getUnauditReturnorderList();
-              }
-            }).catch(error => {
-              loading.dismiss();
-              console.log(error);
-              this.appService.toast('操作失败，请稍后再试', 1000, 'middle');
-            });
+            this.confirmReturnPost(index);
           }
         }
       ]
@@ -244,7 +240,6 @@ export class UnauditTabs {
     const orderModal = this.modalCtrl.create(AuditReturnorder);
     orderModal.present();
   }
-
   // 下拉刷新请求数据
   doRefresh(refresher) {
     this.start = 0;
@@ -261,7 +256,6 @@ export class UnauditTabs {
     }, AppConfig.LOAD_TIME);
     this.showNoMore = false;
   }
-
   // 上拉刷新请求数据
   loadMore(infiniteScroll) {
     if (this.currentIndex == 0) {
@@ -285,9 +279,11 @@ export class UnauditTabs {
         this.appService.getToken(error, () => {
           this.loadMore(infiniteScroll);
         });
-        infiniteScroll.complete();
         console.log(error);
-        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        if(error.error != "invalid_token") {
+          infiniteScroll.complete();
+          this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        }
       });
     } else {
       let url = `${AppConfig.API.getReturnorderList}?deliveryType=1&status=0&start=${this.start}&limit=${this.limit}`;
@@ -310,14 +306,14 @@ export class UnauditTabs {
         this.appService.getToken(error, () => {
           this.loadMore(infiniteScroll);
         });
-        infiniteScroll.complete();
         console.log(error);
-        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        if(error.error != "invalid_token") {
+          infiniteScroll.complete();
+          this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        }
       });
     }
-
   }
-
   // 切换tab标签
   getCurrentStatus(index) {
     this.start = 0;
@@ -333,7 +329,6 @@ export class UnauditTabs {
       this.getUnauditReturnorderList();
     }
   }
-
   //请求失败后刷新
   requestDefeatRefreshReturnorder() {
     this.requestDefeat = false;
@@ -343,7 +338,6 @@ export class UnauditTabs {
     this.up = false;
     this.getUnauditReturnorderList();
   }
-
   requestDefeatRefreshCancelorder() {
     this.requestDefeat = false;
     this.loadingShow = true;

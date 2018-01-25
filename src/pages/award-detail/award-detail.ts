@@ -5,7 +5,7 @@ import { AppService, AppConfig } from '../../app/app.service';
   templateUrl: 'award-detail.html',
   selector: 'withdraw-awardDetail'
 })
-export class AwardDetail{
+export class AwardDetail {
   pageSize: number = 10;
   currentPage: number = 1;
   awardDetail: any = [];
@@ -20,37 +20,38 @@ export class AwardDetail{
   constructor(
     public navParams: NavParams,
     public appService: AppService
-  ){
+  ) {
     this.load = AppConfig.load;
     this.getAllData();
   }
   getAwardDetail() {
     this.isLoadingShow = true;
     let url = `${AppConfig.API.bonusList}?typeList=3,4&statusList=2&start=${(this.currentPage - 1) * this.pageSize}&limit=${this.pageSize}`;
-    this.appService.httpGet(url)
-      .then(data => {
-        if (data.data.length > 0) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
-          });
-          this.awardDetail.push(...data.data);
-        }
-        this.count = data.count;
-        this.isEmpty = data.count === 0 ? true : false;
-        this.requestFail = false;
-        this.isLoadingShow = false;
-      }).catch(error => {
-        this.appService.getToken(error, () => {
-          this.getAwardDetail();
+    this.appService.httpGet(url).then(data => {
+      if (data.data.length > 0) {
+        data.data.map(item => {
+          item.baseAmount = item.baseAmount.toFixed(2);
+          item.percent = item.percent;
+          item.amount = item.amount.toFixed(2);
+          item.returnAmount = item.returnAmount.toFixed(2);
         });
-        console.log(error);
-        this.requestFail = true;
-        this.isEmpty = false;
-        this.isLoadingShow = false;
+        this.awardDetail.push(...data.data);
+      }
+      this.count = data.count;
+      this.isEmpty = data.count === 0 ? true : false;
+      this.requestFail = false;
+      this.isLoadingShow = false;
+    }).catch(error => {
+      this.appService.getToken(error, () => {
+        this.getAwardDetail();
       });
+      console.log(error);
+      if (error.error != "invalid_token") {
+        this.requestFail = true;
+      }
+      this.isLoadingShow = false;
+      this.isEmpty = false;
+    });
   }
   /** 获取总金额 **/
   getBonusSum() {
@@ -72,7 +73,7 @@ export class AwardDetail{
   }
   /** 上拉翻页 **/
   loadMore(infiniteScroll) {
-    this.currentPage ++;
+    this.currentPage++;
     this.refreshPage(infiniteScroll);
   }
   /** 请求错误时，刷新页面 **/

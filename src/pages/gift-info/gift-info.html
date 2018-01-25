@@ -4,24 +4,24 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <div class="order-title">
-    <img class="my-picture" src="./assets/image/store.png" alt="店铺">
-    <h2>{{ giftInfo.brandshopName }}</h2>
-  </div>
-  <div class="order-list">
-
-    <div class="order-item">
-      <dl>
-        <dt>
-          <img class="my-picture" [src]="giftInfo.gift.image" alt="小裙子">
-        </dt>
-        <dd class="product-title">{{ giftInfo.gift.name }}</dd>
-        <dd class="sku-list">
-          <span>领取时间：{{ giftInfo.gift.receiveTime }}</span>
-        </dd>
-      </dl>
+  <div *ngIf="giftInfo.giftSeq">
+    <div class="order-title">
+      <img class="my-picture" src="./assets/image/store.png" alt="店铺">
+      <h2>{{ giftInfo.brandshopName }}</h2>
     </div>
-
+    <div class="order-list">
+      <div class="order-item">
+        <dl>
+          <dt>
+            <img class="my-picture" [src]="giftInfo.imageName | handleGiftImage" alt="小裙子">
+          </dt>
+          <dd class="product-title">{{ giftInfo.giftName }}</dd>
+          <dd class="sku-list">
+            <span>领取时间：{{ giftInfo.receiveDate | date:'yyyy.MM.dd HH:mm' }}</span>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <button class="btn-confirm" ion-button (click)="presentConfirm()">确认兑换</button>
   </div>
-  <button class="btn-confirm" ion-button (click)="presentConfirm()">确认兑换</button>
 </ion-content>

@@ -8,7 +8,7 @@ creat-order {
 		display: block;
 		position: absolute;
 		right: 1rem;
-		top: 50%;
+		bottom: 1rem;
 		margin-top: -11px;
 		padding-left: 22px;
 		line-height: 20px;
@@ -21,6 +21,7 @@ creat-order {
 		}
   }
   .search-box {
+    position: relative;
 		background: #fff;
     .item {
       border-bottom: 0;
@@ -35,23 +36,29 @@ creat-order {
       }
     }
   }
-  .searchbar {
+  .search {
 		background: none;
-		border: none;
 		height: 34px;
-		margin: 0 1rem;
-		width: auto;
-		padding: 0;
+		margin: .5rem 1rem;
+		width: 94%;
 		min-height: auto;
-		.searchbar-input {
-			font-size: 1.5rem;
-			border-radius: 18px;
-			border: solid 1px #ccc;
-			height: 36px;
-			padding: 0 55px 0 30px;
-			-webkit-box-shadow: none;
-			box-shadow: none;
-		}
+    font-size: 1.5rem;
+    border-radius: 18px;
+    border: solid 1px #ccc;
+    padding: 0 30px 0 30px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .clear {
+    position: absolute;
+    right: 26px;
+    top: 8px;
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 3rem;
   }
   .searchbar-md {
 		.searchbar-search-icon {
@@ -76,10 +83,24 @@ creat-order {
 			background: #fff;
 			float: left;
 			width: 47%;
+			padding-top: 47%;
 			margin: 8px 0 0 2%;
+			position: relative;
 			img {
 				display: block;
 				width: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			img.nodata-image {
+				z-index: 10;
+				width: 80%;
+				left: 10%;
+				top: 5%;
+			}
+			img.product-image {
+				z-index: 20;
 			}
 			p {
 				font-size: 1.4rem;

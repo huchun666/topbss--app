@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
   selector: 'order-layer',
@@ -31,7 +31,6 @@ export class OrderLayer {
   isShowAddNumber: Boolean = false;
   brandshopSeq: number;
   constructor(
-    public navCtrl: NavController,
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public appService: AppService,
@@ -45,7 +44,6 @@ export class OrderLayer {
     this.load = AppConfig.load;
     this.getProductSkuWithDefault();
   }
-
   //初始化sku属性
   getProductSkuWithDefault() {
     let url = `${AppConfig.API.getProductSkuWithDefault}?brandshopSeq=${this.brandshopSeq}&productSeq=${this.productSeq}`;
@@ -79,20 +77,20 @@ export class OrderLayer {
       }
     }).catch(error => {
       this.appService.getToken(error, () => {
-				this.getProductSkuWithDefault();
-			});
+        this.getProductSkuWithDefault();
+      });
       this.loadingShow = false;
       this.isShowAddNumber = false;
       console.log(error);
-      this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      if (error.error != "invalid_token") {
+        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      }
     });
   }
-
   dismiss() {
     let data = { 'warehouseCount': this.warehouseCount };
     this.viewCtrl.dismiss(data);
   }
-
   addCount() {
     if (this.overStock == true) {
       return;
@@ -100,28 +98,25 @@ export class OrderLayer {
     if (this.orderLayerData.stock > this.count) {
       this.overStock = false;
       this.count++;
-    }else {
+    } else {
       this.overStock = true;
       this.appService.toast('不能添加更多宝贝了哦', 1000, 'middle');
     }
   }
-
   removeCount() {
     this.overStock = false;
     this.count = this.count === 1 ? 1 : (this.count - 1);
   }
-
   //输入数字为负数时重置为1
   resetCount() {
     this.count = this.count <= 0 ? 1 : this.count;
-    if (this.count >= this.orderLayerData.stock) {
+    if (this.count > this.orderLayerData.stock) {
       this.count = this.orderLayerData.stock;
       this.appService.toast('不能超出库存哦', 1000, 'middle');
-    }else {
+    } else {
       this.count = this.count;
     }
   }
-
   // 切换sku属性时
   changeRadio(event, index, currentValue) {
     if (this.attrValueArr[index] != currentValue) {
@@ -160,10 +155,11 @@ export class OrderLayer {
         this.changeRadio(event, index, currentValue);
       });
       console.log(error);
-      this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
+      if (error.error != "invalid_token") {
+        this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
+      }
     });
   }
-
   //确认添加
   warehouseAdd() {
     let olabel = document.getElementsByClassName('labelTag');
@@ -173,7 +169,12 @@ export class OrderLayer {
         classLength++;
       }
     }
-    if (this.attrMap.length == classLength) {
+    if (this.orderLayerData.stock >= this.count) {
+      this.overStock = false;
+    } else {
+      this.overStock = true;
+    }
+    if (this.attrMap.length === classLength && !this.overStock) {
       let url = AppConfig.API.warehouseAdd;
       let body = {
         "productId": this.orderLayerData.productSeq,
@@ -192,9 +193,11 @@ export class OrderLayer {
           this.warehouseAdd();
         });
         console.log(error.message);
-        this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
+        if (error.error != "invalid_token") {
+          this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
+        }
       })
-    } else {
+    } else if (this.attrMap.length != classLength) {
       this.appService.toast('请选择商品参数信息', 1000, 'middle');
     }
   }

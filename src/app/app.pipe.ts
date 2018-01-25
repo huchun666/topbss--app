@@ -6,7 +6,7 @@ import { AppConfig } from './app.service';
 @Pipe({ name: 'setOrderStatus' })
 export class FilterStatusPipe implements PipeTransform {
   transform(param: string): any {
-    switch(param) {
+    switch (param) {
       case "0":
         return {
           status: "待支付",
@@ -58,7 +58,7 @@ export class FilterStatusPipe implements PipeTransform {
 @Pipe({ name: 'setReturnOrderStatus' })
 export class FilterReturnStatusPipe implements PipeTransform {
   transform(param: string): any {
-    switch(param) {
+    switch (param) {
       case "0":
         return {
           status: "申请审核中",
@@ -98,7 +98,7 @@ export class FilterReturnStatusPipe implements PipeTransform {
 @Pipe({ name: 'setCancelOrderStatus' })
 export class FilterCancelStatusPipe implements PipeTransform {
   transform(param: string): any {
-    switch(param) {
+    switch (param) {
       case "0":
         return {
           status: "申请审核中",
@@ -126,18 +126,19 @@ export class FilterCancelStatusPipe implements PipeTransform {
     }
   }
 }
+
 // 提现明细
 @Pipe({ name: 'setWithdrawStatus' })
 export class FilterWithdrawStatusPipe implements PipeTransform {
   transform(param: number): any {
-    switch(param) {
+    switch (param) {
       case 0:
-        return { 
+        return {
           status: "失败",
           pass: false
         }
       case 1:
-        return { 
+        return {
           status: "成功",
           pass: true
         }
@@ -149,11 +150,11 @@ export class FilterWithdrawStatusPipe implements PipeTransform {
 @Pipe({ name: 'setGiftType' })
 export class FilterGiftTypePipe implements PipeTransform {
   transform(giftType: string, expoent: string): string {
-    if (giftType=='0' && expoent=='2'){
+    if (giftType == '0' && expoent == '2') {
       return "预约兑换";
-    }else if (giftType=='0' && expoent=='3'){
+    } else if (giftType == '0' && expoent == '3') {
       return "预约成功";
-    }else if (giftType=='1') {
+    } else if (giftType == '1') {
       return "到店兑换";
     }
   }
@@ -163,7 +164,7 @@ export class FilterGiftTypePipe implements PipeTransform {
 @Pipe({ name: 'setHandleGiftType' })
 export class FilterHandleGiftTypePipe implements PipeTransform {
   transform(giftType: string): string {
-    switch(giftType) {
+    switch (giftType) {
       case "0":
         return "预约兑换";
       case "1":
@@ -224,7 +225,7 @@ export class HandleGiftImagePipe implements PipeTransform {
 @Pipe({ name: 'reasonType' })
 export class ReasonTypePipe implements PipeTransform {
   transform(param: string): any {
-    switch(param) {
+    switch (param) {
       case "1":
         return "七天无理由退货"
       case "2":

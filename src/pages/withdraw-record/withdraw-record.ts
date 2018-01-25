@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavParams } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
   selector: 'withdraw-record',
@@ -17,8 +17,6 @@ export class WithdrawRecord {
   load: any;
   isLoadingShow: boolean = false;
   constructor(
-    public navCtrl: NavController, 
-    public alertCtrl: AlertController,
     public navParams: NavParams,
     public appService: AppService
   ) {
@@ -28,8 +26,7 @@ export class WithdrawRecord {
   getWithdrawList() {
     this.isLoadingShow = true;
     let url = `${AppConfig.API.withdrawList}?start=${(this.currentPage - 1) * this.pageSize}&limit=${this.pageSize}`;
-    this.appService.httpGet(url)
-      .then(data => {
+    this.appService.httpGet(url).then(data => {
         if (data.data.length > 0) {
           data.data.map(item => {
             item.amount = item.amount.toFixed(2);
@@ -43,20 +40,21 @@ export class WithdrawRecord {
         this.requestFail = false;
         this.isLoadingShow = false;
         this.withdrawAmount = this.navParams.get("param1"); //提现总计，从当前账户传入过来
-      })
-      .catch(error => {
+      }).catch(error => {
         this.appService.getToken(error, () => {
           this.getWithdrawList();
         });
         console.log(error);
-        this.requestFail = true;
         this.isEmpty = false;
         this.isLoadingShow = false;
+        if(error.error != "invalid_token") {
+          this.requestFail = true;
+        }
       }
-    );
+      );
   }
   loadMore(infiniteScroll) {
-    this.currentPage ++;
+    this.currentPage++;
     this.refreshPage(infiniteScroll);
   }
   refresh() {

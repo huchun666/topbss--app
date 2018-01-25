@@ -5,15 +5,15 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-	<div class="qrcode-box">
-		<div class='qrcode'>
-			<qr-code [value]="myCode" [size]="200"></qr-code>
-			<span>扫码完成支付</span>
-			<div class="total">￥{{ totalPriceFloat }}</div>
-		</div>
-	</div>
-	<div class="btn-list">
-		<button class="btn-update" ion-button outline (touchstart)="updateOrder()">修改此单</button>
-		<button class="order-again" ion-button (touchstart)="orderAgain()">再来一单</button>
-	</div>
+  <div class="qrcode-box">
+    <div class='qrcode'>
+      <qr-code [value]="myCode" [size]="200"></qr-code>
+      <span>扫码完成支付</span>
+      <div class="total">￥{{ totalPriceFloat }}</div>
+    </div>
+  </div>
+  <div class="btn-list">
+    <button class="btn-update" ion-button outline (touchstart)="updateOrder()">修改此单</button>
+    <button class="order-again" ion-button (touchstart)="orderAgain()">再来一单</button>
+  </div>
 </ion-content>

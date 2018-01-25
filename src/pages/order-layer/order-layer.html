@@ -1,48 +1,46 @@
 <ion-content>
-	<div class="layer-out" (touchstart)="dismiss()"></div>
-	<div class="sku-box">
-		<ion-list>
-		  <ion-item>
-		    <ion-thumbnail item-start>
-					<img [src]="attrImageSeq | productSkuDTOImage">
-		    </ion-thumbnail>
-				<h2>{{ productName }}</h2>
-				<h2>￥{{ skuPrice }}</h2>
-		  </ion-item>
-		</ion-list>
-
-		<div class="sku-list">
-			<!-- loading -->
-			<div class="loading-wrapper" *ngIf="loadingShow">
-				<div>
-					<ion-spinner item-start [name]="load.spinner"></ion-spinner>
-				</div>
-				<div [innerHTML]="load.content"></div>
-			</div>
-			<div class="sku-attr" *ngFor = "let item of attrMap;let i = index">
-				<div class="sku-key">{{ item[0].attrName }}</div>
-				<div class="sku-value">
-					<ul>
-						<li class="labelTag" [ngClass]="{active: skuAttrValue[i] === skuAttr.attrValue, invalidAttrValueClass: skuAttr.invalidAttrValue | invalidAttrValueClass}" *ngFor="let skuAttr of item">
-							<span (click)="changeRadio($event, i, skuAttr.attrValue)">{{ skuAttr.attrValue }}</span>
-							<span *ngIf="skuAttr.invalidAttrValue == 'invalidAttrValue'" class="modal">{{ skuAttr.attrValue }}</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-			
-			<div class="sku-attr" *ngIf="isShowAddNumber">
-				<div class="sku-key">数量</div>
-				<div class="sku-value count">
-					<ion-icon class="icon-add" [ngClass]="{changeGray: overStock | overStockPipe}" name="add" (touchstart)="addCount()"></ion-icon>
-					<ion-icon class="icon-remove" [ngClass]="{changeGray: count | changeGray}" name="remove" (touchstart)="removeCount()"></ion-icon>
-					<div class="add-count">
-						<ion-input (ionBlur)="resetCount()" [(ngModel)]="count" type="number" clearInput=true></ion-input>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<button class="btn-add" ion-button full (touchstart)="warehouseAdd()" *ngIf="confirmAdd">确认添加</button>
-	
+  <div class="layer-out" (touchstart)="dismiss()"></div>
+  <div class="sku-box">
+    <ion-list>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img [src]="attrImageSeq | productSkuDTOImage">
+        </ion-thumbnail>
+        <h2>{{ productName }}</h2>
+        <h2>￥{{ skuPrice }}</h2>
+      </ion-item>
+    </ion-list>
+    <div class="sku-list">
+      <!-- loading -->
+      <div class="loading-wrapper" *ngIf="loadingShow">
+        <div>
+          <ion-spinner item-start [name]="load.spinner"></ion-spinner>
+        </div>
+        <div [innerHTML]="load.content"></div>
+      </div>
+      <div class="sku-attr" *ngFor="let item of attrMap;let i = index">
+        <div class="sku-key">{{ item[0].attrName }}</div>
+        <div class="sku-value">
+          <ul>
+            <li class="labelTag" [ngClass]="{active: skuAttrValue[i] === skuAttr.attrValue, invalidAttrValueClass: skuAttr.invalidAttrValue | invalidAttrValueClass}"
+              *ngFor="let skuAttr of item">
+              <span (click)="changeRadio($event, i, skuAttr.attrValue)">{{ skuAttr.attrValue }}</span>
+              <span *ngIf="skuAttr.invalidAttrValue == 'invalidAttrValue'" class="modal">{{ skuAttr.attrValue }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="sku-attr" *ngIf="isShowAddNumber">
+        <div class="sku-key">数量</div>
+        <div class="sku-value count">
+          <ion-icon class="icon-add" [ngClass]="{changeGray: overStock | overStockPipe}" name="add" (touchstart)="addCount()"></ion-icon>
+          <ion-icon class="icon-remove" [ngClass]="{changeGray: count | changeGray}" name="remove" (touchstart)="removeCount()"></ion-icon>
+          <div class="add-count">
+            <ion-input (ionBlur)="resetCount()" [(ngModel)]="count" type="number" clearInput=true></ion-input>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn-add" ion-button full (touchstart)="warehouseAdd()" *ngIf="confirmAdd">确认添加</button>
 </ion-content>

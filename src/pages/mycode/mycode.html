@@ -4,17 +4,17 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-	<div class="qrcode-box">
-		<div class='qrcode'>
-			<qr-code *ngIf="myCode" [value]="myCode" [size]="180"></qr-code>
-		</div>
-		<div class="total">扫码注册淘璞，享更多优惠</div>
-		<div class="btn-brandshop-code" (touchstart)="showBrandshopCode()">{{ btnText }}</div>
-		<div class="brandshop-code" *ngIf="isShow">
-			<div class='qrcode'>
-				<qr-code *ngIf="brandshopIndexUrl" [value]="brandshopIndexUrl" [size]="180"></qr-code>
-			</div>
-			<div class="total">扫门店二维码，可快速定位到门店首页</div>
-		</div>
-	</div>
+  <div class="qrcode-box">
+    <div class='qrcode'>
+      <qr-code *ngIf="myCode" [value]="myCode" [size]="180"></qr-code>
+    </div>
+    <div class="total">扫码注册淘璞，享更多优惠</div>
+    <div class="btn-brandshop-code" (touchstart)="showBrandshopCode()">{{ btnText }}</div>
+    <div class="brandshop-code" *ngIf="isShow">
+      <div class='qrcode'>
+        <qr-code *ngIf="brandshopIndexUrl" [value]="brandshopIndexUrl" [size]="180"></qr-code>
+      </div>
+      <div class="total">扫门店二维码，可快速定位到门店首页</div>
+    </div>
+  </div>
 </ion-content>

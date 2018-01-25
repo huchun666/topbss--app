@@ -5,20 +5,21 @@
 </ion-header>
 <ion-content>
   <div class="account-title">
-  	<div class="binded"><img src="./assets/image/ok.png" alt="">已绑定微信</div>
+    <div class="binded">
+      <img src="./assets/image/ok.png" alt="">已绑定微信</div>
   </div>
   <div class="form-list">
-  	<ion-list>
-  	  <ion-item>
-  	    <ion-input [ngModel]="name" clearInput=true></ion-input>
-  	  </ion-item>
+    <ion-list>
       <ion-item>
-      <ion-input [ngModel]="phone" clearInput=true></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input [ngModel]="idCard" clearInput=true></ion-input>
-    </ion-item>
-	</ion-list>
-  <button class="btn-bind" ion-button>确定</button>
+        <ion-input [ngModel]="name" clearInput=true></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [ngModel]="phone" clearInput=true></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [ngModel]="idCard" clearInput=true></ion-input>
+      </ion-item>
+    </ion-list>
+    <button class="btn-bind" ion-button>确定</button>
   </div>
 </ion-content>

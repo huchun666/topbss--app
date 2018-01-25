@@ -5,10 +5,15 @@ payment-code {
 		width: 5rem;
 		padding-left: 1rem;
 		position: absolute;
-		top: 0;
 		left: 0;
 		height: 100%;
 		line-height: 44px;
+  }
+  .toolbar-content-md .btn-close {
+    top: 0;
+  }
+  .toolbar-content-ios .btn-close {
+    bottom: -1rem;
   }
   .qrcode-box {
 		background: #fff;

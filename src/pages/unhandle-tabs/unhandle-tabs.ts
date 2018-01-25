@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, NavParams, AlertController, Content, ModalController } from 'ionic-angular';
+import { NavParams, AlertController, Content, ModalController } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 import { HandleSelfgift } from '../handle-selfgift/handle-selfgift';
 import { HandleExpressgift } from '../handle-expressgift/handle-expressgift';
@@ -24,12 +24,11 @@ export class UnhandleTabs {
   load: any = {};
   loadingShow: Boolean = true;
   currentIndex = 1;
-  reserveShopTimeMin: string =  '';
+  reserveShopTimeMin: string = '';
   toTop: Boolean;//是否显示返回顶部按钮
   requestDefeat: Boolean = false;
   showInfinite: Boolean = false;
   constructor(
-    public navCtrl: NavController,
     public alertCtrl: AlertController,
     public navParams: NavParams,
     public appService: AppService,
@@ -54,10 +53,8 @@ export class UnhandleTabs {
     // 获取快递到家赠品
     this.getUnhandleExpressGiftList();
   }
-
   // 获取tab上显示的数量
-
-  getTabCount () {
+  getTabCount() {
     let urlExpress = `${AppConfig.API.getGiftList}?type=0&start=${this.start}&limit=${this.limit}`;
     let urlSelf = `${AppConfig.API.getGiftList}?type=1&start=${this.start}&limit=${this.limit}`;
     this.appService.httpGet(urlExpress).then(data => {
@@ -67,7 +64,9 @@ export class UnhandleTabs {
       this.appService.getToken(error, () => {
         this.getTabCount();
       });
-      this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      if(error.error != "invalid_token") {
+        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      }
     });
     this.appService.httpGet(urlSelf).then(data => {
       this.selfGiftCount = data.count;
@@ -76,10 +75,11 @@ export class UnhandleTabs {
       this.appService.getToken(error, () => {
         this.getTabCount();
       });
-      this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      if(error.error != "invalid_token") {
+        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+      }
     })
   }
-
   // 获取自提赠品
   getUnhandleSelfGiftList() {
     this.loadingShow = true;
@@ -116,11 +116,12 @@ export class UnhandleTabs {
       this.unhandleSeflGiftArray = [];
       this.loadingShow = false;
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     })
   }
-
   addOrderStatusClass(param: any) {
     param.map(function (item) {
       if (item.giftType == '0' && item.status == '2') {
@@ -144,11 +145,9 @@ export class UnhandleTabs {
     })
     orderModal.present();
   }
-
   clearReserveArriveTime(index) {
     this.unhandleSeflGiftArray[index].reserveShopTime = "";
   }
-
   reserveAffirm(index) {
     if (this.unhandleSeflGiftArray[index].reserveShopTime != null) {
       // 预约确认更改数据
@@ -172,15 +171,16 @@ export class UnhandleTabs {
         this.appService.getToken(error, () => {
           this.reserveAffirm(index);
         });
-        loading.dismiss();
+        if(error.error != "invalid_token") {
+          this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
+          loading.dismiss();
+        }
         console.log(error.message);
-        this.appService.toast('操作失败，请稍后重试', 1000, 'middle');
       });
     } else {
       this.appService.toast('请选择会员预约到店时间', 1000, 'middle');
     }
   }
-
   //回到顶部
   scrollTo() {
     this.content.scrollTo(0, 0, 300);
@@ -195,7 +195,6 @@ export class UnhandleTabs {
       }
     })
   }
-
   // 获取快递赠品
   getUnhandleExpressGiftList() {
     this.loadingShow = true;
@@ -232,11 +231,12 @@ export class UnhandleTabs {
       this.unhandleExpressGiftArray = [];
       this.loadingShow = false;
       console.log(error);
-      this.showInfinite = false;
-      this.requestDefeat = true;
+      if(error.error != "invalid_token") {
+        this.showInfinite = false;
+        this.requestDefeat = true;
+      }
     })
   }
-
   goExpressgift() {
     const orderModal = this.modalCtrl.create(HandleExpressgift);
     orderModal.onDidDismiss(() => {
@@ -247,6 +247,40 @@ export class UnhandleTabs {
       this.getUnhandleExpressGiftList();
     })
     orderModal.present();
+  }
+  sendProductPost(index, data) {
+    if (data.companyName != "" && data.orderNum != "") {
+      let body = {
+        memberGiftAccountSeq: this.unhandleExpressGiftArray[index].memberGiftAccountSeq,
+        expressCompany: data.companyName,
+        expressNo: data.orderNum
+      }
+      let loading = this.appService.loading();
+      loading.present();
+      let url = AppConfig.API.confirmExpressInfo;
+      this.appService.httpPost(url, body).then(data => {
+        if (data.type == "success") {
+          this.start = 0;
+          this.down = true;
+          this.up = false;
+          loading.dismiss();
+          this.getUnhandleExpressGiftList();
+        }
+      }).catch(error => {
+        this.appService.getToken(error, () => {
+          this.sendProductPost(index, data);
+        });
+        loading.dismiss();
+        console.log(error);
+        if (error.error != "invalid_token") {
+          this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        }
+      });
+    } else if (data.companyName != "") {
+      this.appService.toast('请填写快递单号', 1000, 'middle');
+    } else if (data.orderNum != "") {
+      this.appService.toast('请填写公司名称', 1000, 'middle');
+    }
   }
   sendProduct(index) {
     let alert = this.alertCtrl.create({
@@ -272,40 +306,13 @@ export class UnhandleTabs {
         {
           text: '确认',
           handler: data => {
-            if (data.companyName != "" && data.orderNum != "") {
-              let body = {
-                memberGiftAccountSeq: this.unhandleExpressGiftArray[index].memberGiftAccountSeq,
-                expressCompany: data.companyName,
-                expressNo: data.orderNum
-              }
-              let loading = this.appService.loading();
-              loading.present();
-              let url = AppConfig.API.confirmExpressInfo;
-              this.appService.httpPost(url, body).then(data => {
-                if (data.type == "success") {
-                  this.start = 0;
-                  this.down = true;
-                  this.up = false;
-                  loading.dismiss();
-                  this.getUnhandleExpressGiftList();
-                }
-              }).catch(error => {
-                loading.dismiss();
-                console.log(error);
-                this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
-              });
-            } else if (data.companyName != "") {
-              this.appService.toast('请填写快递单号', 1000, 'middle');
-            } else if (data.orderNum != "") {
-              this.appService.toast('请填写公司名称', 1000, 'middle');
-            }
+            this.sendProductPost(index, data);
           }
         }
       ]
     });
     alert.present();
   }
-
   // 下拉刷新请求数据
   doRefresh(refresher) {
     this.start = 0;
@@ -322,7 +329,6 @@ export class UnhandleTabs {
     }, AppConfig.LOAD_TIME);
     this.showNoMore = false;
   }
-
   // 上拉刷新请求数据
   loadMore(infiniteScroll) {
     if (this.currentIndex == 0) {
@@ -340,9 +346,11 @@ export class UnhandleTabs {
         this.appService.getToken(error, () => {
           this.loadMore(infiniteScroll);
         });
-        infiniteScroll.complete();
         console.log(error);
-        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        if(error.error != "invalid_token") {
+          infiniteScroll.complete();
+          this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        }
       });
     } else {
       let url = `${AppConfig.API.getGiftList}?type=1&start=${this.start}&limit=${this.limit}`;
@@ -364,13 +372,14 @@ export class UnhandleTabs {
         this.appService.getToken(error, () => {
           this.loadMore(infiniteScroll);
         });
-        infiniteScroll.complete();
         console.log(error);
-        this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        if(error.error != "invalid_token") {
+          infiniteScroll.complete();
+          this.appService.toast('网络异常，请稍后再试', 1000, 'middle');
+        }
       });
     }
   }
-
   // 切换tab标签
   getCurrentStatus(index) {
     this.start = 0;
@@ -385,7 +394,6 @@ export class UnhandleTabs {
       this.getUnhandleExpressGiftList();
     }
   }
-
   //请求失败后刷新
   requestDefeatRefresh() {
     this.requestDefeat = false;
@@ -395,7 +403,6 @@ export class UnhandleTabs {
     this.up = false;
     this.getUnhandleExpressGiftList();
   }
-
   //请求失败后刷新
   requestDefeatRefreshSelfGift() {
     this.requestDefeat = false;
@@ -405,7 +412,6 @@ export class UnhandleTabs {
     this.up = false;
     this.getUnhandleSelfGiftList();
   }
-
   requestDefeatRefreshExpressGift() {
     this.requestDefeat = false;
     this.loadingShow = true;
