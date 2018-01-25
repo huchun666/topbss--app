@@ -24,6 +24,7 @@ export class OrderStore {
   requestDefeat: Boolean = false;
   totalPriceIsOrNull: Boolean = true;
   totalNumberIsOrNull: Boolean = true;
+  maxPrice: Number = 99999999.99;
   constructor(
     public navCtrl: NavController,
     public appService: AppService,
@@ -166,7 +167,7 @@ export class OrderStore {
     if (this.orderStoreDataArray[index].itemPrice == null) {
       this.orderStoreDataArray[index].itemPrice = 0;
       this.appService.toast('商品总额不能为空', 1000, 'middle');
-    }else if (this.orderStoreDataArray[index].itemPrice > 99999999.99) {
+    }else if (this.orderStoreDataArray[index].itemPrice > this.maxPrice) {
       this.appService.toast('请输入正确金额', 1000, 'middle');
     }else {
       this.warehouseUpdate(index, "reset");
@@ -194,7 +195,7 @@ export class OrderStore {
       this.totalPrice += Number(totalArr[i].value);
     }
     for (let i = 0; i < totalArr.length; i++) {
-      if (totalArr[i].value === '' || totalArr[i].value > 99999999.99) {
+      if (totalArr[i].value === '' || totalArr[i].value > this.maxPrice) {
         this.totalPriceIsOrNull = false;
         return;
       } else {
