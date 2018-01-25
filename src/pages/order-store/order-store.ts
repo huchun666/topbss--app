@@ -166,8 +166,11 @@ export class OrderStore {
     if (this.orderStoreDataArray[index].itemPrice == null) {
       this.orderStoreDataArray[index].itemPrice = 0;
       this.appService.toast('商品总额不能为空', 1000, 'middle');
+    }else if (this.orderStoreDataArray[index].itemPrice > 99999999.99) {
+      this.appService.toast('请输入正确金额', 1000, 'middle');
+    }else {
+      this.warehouseUpdate(index, "reset");
     }
-    this.warehouseUpdate(index, "reset");
   }
   resetProductNum(index) {
     if (this.orderStoreDataArray[index].productNum <= 0) {
@@ -191,7 +194,7 @@ export class OrderStore {
       this.totalPrice += Number(totalArr[i].value);
     }
     for (let i = 0; i < totalArr.length; i++) {
-      if (totalArr[i].value === '') {
+      if (totalArr[i].value === '' || totalArr[i].value > 99999999.99) {
         this.totalPriceIsOrNull = false;
         return;
       } else {
@@ -199,7 +202,7 @@ export class OrderStore {
       }
     }
     for (let i = 0; i < totalNumberArr.length; i++) {
-      if (totalNumberArr[i].value === '') {
+      if (totalNumberArr[i].value === '' || totalNumberArr[i].value > this.orderStoreDataArray[i].productSkuDTO.stock) {
         this.totalNumberIsOrNull = false;
         return;
       } else {
