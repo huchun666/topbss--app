@@ -7,6 +7,7 @@ import { Dialogs } from '@ionic-native/dialogs';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Network } from '@ionic-native/network';
+import { SuperTabsModule } from 'ionic2-super-tabs';
 import {
   FilterStatusPipe,
   FilterReturnStatusPipe,
@@ -60,6 +61,10 @@ import { AwardDetail } from '../pages/award-detail/award-detail';
 import { DetailTabs } from '../pages/detail-tabs/detail-tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { UnhandleSelfPage } from '../pages/unhandle-self/unhandle-self';
+import { UnhandleExpressPage } from '../pages/unhandle-express/unhandle-express';
+import { UnauditCancelPage } from '../pages/unaudit-cancel/unaudit-cancel';
+import { UnauditReturnPage } from '../pages/unaudit-return/unaudit-return';
 let componentsList = [
   MyApp,
   Login,
@@ -96,7 +101,11 @@ let componentsList = [
   BrandshopOrderList,
   OrderDetail,
   AwardDetail,
-  DetailTabs
+  DetailTabs,
+  UnhandleSelfPage,
+  UnhandleExpressPage,
+  UnauditCancelPage,
+  UnauditReturnPage
 ];
 @NgModule({
   declarations: [
@@ -125,6 +134,7 @@ let componentsList = [
       modalLeave: 'modal-slide-out',
       statusbarPadding: false
     }),
+    SuperTabsModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: componentsList,
