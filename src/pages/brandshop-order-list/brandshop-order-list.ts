@@ -51,6 +51,17 @@ export class BrandshopOrderList {
     this.dateStartMax = this.appService.reserveDate();
     this.dateEndMax = this.appService.reserveDate();
   }
+  // 每次进入页面的时候都会执行
+  ionViewDidEnter(){
+    this.dateStart = '';
+    this.dateEnd = '';
+    this.date.dateStart = this.dateStart;
+    this.date.dateEnd = this.dateEnd;
+    this.appService.eventBrand.emit(this.date);
+    this.dateStartMax = this.appService.reserveDate();
+    this.dateEndMax = this.appService.reserveDate();
+  }
+
   // 选中时间获取订单
   getOrderListByDate() {
     if (this.dateStart != '') {

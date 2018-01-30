@@ -30,7 +30,6 @@ export class OrderListAllPage {
     public navParams: NavParams,
     public events: Events) {
       this.load = AppConfig.load;
-      this.getOrderList();
       this.appService.event.subscribe((data) => {
         this.getOrderListByDate(data);
       })
