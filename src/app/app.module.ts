@@ -7,6 +7,7 @@ import { Dialogs } from '@ionic-native/dialogs';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Network } from '@ionic-native/network';
+import { SuperTabsModule } from 'ionic2-super-tabs';
 import {
   FilterStatusPipe,
   FilterReturnStatusPipe,
@@ -49,7 +50,7 @@ import { WithdrawRecord } from '../pages/withdraw-record/withdraw-record';
 import { MyCode } from '../pages/mycode/mycode';
 import { AwardTabs } from '../pages/award-tabs/award-tabs';
 import { AwardActivity } from '../pages/award-activity/award-activity';
-import { AwardOrder } from '../pages/award-order/award-order';
+import { AwardOrderPage } from '../pages/award-order/award-order';
 import { BindAccount } from '../pages/account/bind-account/bind-account';
 import { AddAccount } from '../pages/account/add-account/add-account';
 import { EditAccount } from '../pages/account/edit-account/edit-account';
@@ -60,6 +61,8 @@ import { AwardDetail } from '../pages/award-detail/award-detail';
 import { DetailTabs } from '../pages/detail-tabs/detail-tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { DetailActivityPage } from '../pages/detail-activity/detail-activity';
+import { DetailOrderPage } from '../pages/detail-order/detail-order';
 let componentsList = [
   MyApp,
   Login,
@@ -88,7 +91,7 @@ let componentsList = [
   MyCode,
   AwardTabs,
   AwardActivity,
-  AwardOrder,
+  AwardOrderPage,
   BindAccount,
   AddAccount,
   EditAccount,
@@ -96,7 +99,12 @@ let componentsList = [
   BrandshopOrderList,
   OrderDetail,
   AwardDetail,
-  DetailTabs
+  DetailTabs,
+  AwardTabs,
+  AwardActivity,
+  AwardOrderPage,
+  DetailActivityPage,
+  DetailOrderPage
 ];
 @NgModule({
   declarations: [
@@ -125,6 +133,7 @@ let componentsList = [
       modalLeave: 'modal-slide-out',
       statusbarPadding: false
     }),
+    SuperTabsModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: componentsList,
