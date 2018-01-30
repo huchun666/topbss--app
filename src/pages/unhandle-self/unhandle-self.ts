@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavParams, Content, ModalController } from 'ionic-angular';
+import { NavParams, Content, ModalController, Events } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 import { HandleSelfgift } from '../handle-selfgift/handle-selfgift';
 
@@ -28,7 +28,9 @@ export class UnhandleSelfPage {
     public navParams: NavParams,
     public appService: AppService,
     public modalCtrl: ModalController,
-    public zone: NgZone
+    public zone: NgZone,
+    public events: Events
+
   ) {
     this.start = 0;
     this.down = true;
@@ -53,6 +55,7 @@ export class UnhandleSelfPage {
     let url = `${AppConfig.API.getGiftList}?type=0&start=${this.start}&limit=${this.limit}`;
     this.appService.httpGet(url).then(data => {
       this.loadingShow = false;
+      this.events.publish('self:created',data.count, Date.now());
       if (this.start < data.count) {
         this.showNoMore = false;
         this.noData = false;

@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavParams, AlertController, Content, ModalController } from 'ionic-angular';
+import { NavParams, AlertController, Content, ModalController, Events } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 import { HandleExpressgift } from '../handle-expressgift/handle-expressgift';
 
@@ -28,7 +28,9 @@ export class UnhandleExpressPage {
     public navParams: NavParams,
     public appService: AppService,
     public modalCtrl: ModalController,
-    public zone: NgZone
+    public zone: NgZone,
+    public events: Events
+
   ) {
     this.start = 0;
     this.down = true;
@@ -37,10 +39,6 @@ export class UnhandleExpressPage {
     this.reserveShopTimeMin = this.appService.reserveDate();
     // 获取快递到家赠品
     this.getUnhandleExpressGiftList();
-  }
-  
-  ionViewDidEnter() {
-    
   }
   //回到顶部
   scrollToTop() {
@@ -65,6 +63,7 @@ export class UnhandleExpressPage {
     let url = `${AppConfig.API.getGiftList}?type=1&start=${this.start}&limit=${this.limit}`;
     this.appService.httpGet(url).then(data => {
       this.loadingShow = false;
+      this.events.publish('express:created',data.count, Date.now());
       if (this.start < data.count) {
         this.showNoMore = false;
         this.noData = false;

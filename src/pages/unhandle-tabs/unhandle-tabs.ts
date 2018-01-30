@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavParams, AlertController, Content, ModalController } from 'ionic-angular';
+import { NavParams, AlertController, Content, ModalController, Events } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 import { UnhandleSelfPage } from '../unhandle-self/unhandle-self';
 import { UnhandleExpressPage } from '../unhandle-express/unhandle-express';
@@ -22,10 +22,21 @@ export class UnhandleTabs {
     public navParams: NavParams,
     public appService: AppService,
     public modalCtrl: ModalController,
-    public zone: NgZone
+    public zone: NgZone,
+    public events: Events
+
   ) {
     this.start = 0;
     // 获取tab数量
+    events.subscribe('express:created', (data, time) => {
+      UnhandleTabs.prototype.expressGiftCount = `快递到家赠品（${data}）`; 
+      this.expressGiftCount = UnhandleTabs.prototype.expressGiftCount;
+    });
+    events.subscribe('self:created', (data, time) => {
+      UnhandleTabs.prototype.selfGiftCount = `到店自提赠品（${data}）`; 
+      this.selfGiftCount = UnhandleTabs.prototype.selfGiftCount;
+    });
+
     this.getTabCount();
   }
   // 获取tab上显示的数量
