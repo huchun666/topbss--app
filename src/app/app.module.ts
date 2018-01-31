@@ -72,6 +72,10 @@ import { BrandshopOrderCancelingPage } from '../pages/brandshop-order-canceling/
 import { BrandshopOrderFinishedPage } from '../pages/brandshop-order-finished/brandshop-order-finished';
 import { BrandshopOrderPayPage } from '../pages/brandshop-order-pay/brandshop-order-pay';
 import { BrandshopOrderReceiptedPage } from '../pages/brandshop-order-receipted/brandshop-order-receipted';
+import { UnhandleSelfPage } from '../pages/unhandle-self/unhandle-self';
+import { UnhandleExpressPage } from '../pages/unhandle-express/unhandle-express';
+import { UnauditCancelPage } from '../pages/unaudit-cancel/unaudit-cancel';
+import { UnauditReturnPage } from '../pages/unaudit-return/unaudit-return';
 let componentsList = [
   MyApp,
   Login,
@@ -119,7 +123,11 @@ let componentsList = [
   BrandshopOrderCancelingPage,
   BrandshopOrderFinishedPage,
   BrandshopOrderPayPage,
-  BrandshopOrderReceiptedPage
+  BrandshopOrderReceiptedPage,
+  UnhandleSelfPage,
+  UnhandleExpressPage,
+  UnauditCancelPage,
+  UnauditReturnPage
 ];
 @NgModule({
   declarations: [
