@@ -34,7 +34,6 @@ export class BrandshopOrderFinishedPage {
     this.load = AppConfig.load;
     this.dateStartMax = this.appService.reserveDate();
     this.dateEndMax = this.appService.reserveDate();
-    this.getOrderList();
     this.appService.eventBrand.subscribe((data) => {
       this.getOrderListByDate(data);
     })
