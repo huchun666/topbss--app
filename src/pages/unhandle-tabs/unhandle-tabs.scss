@@ -2,13 +2,23 @@ unhandle-tabs {
   .back-button {
 	  display: block;
   }
+  .tab-buttons-container {
+    background-color: white!important;
+    padding: 0;
+    color: #5e9efe;
+    super-tab-button.selected {
+      border-bottom: solid 4px #5e9efe;
+    }
+  }
+  super-tabs-container {
+    height: 100%!important;
+  }
   .statusBox .toolbar-background {
     background-color: white!important;
     padding: 0;
   }
   .statusBox.toolbar.toolbar-ios {
     padding: 0;
-    height: 4rem;
   }
   .statusBox {
     border-bottom: solid 1px #f5f5f5;
@@ -316,7 +326,7 @@ unhandle-tabs {
     }
   }
   .btn-noMore {
-    margin: 1rem 0;
+    margin-bottom: 5rem;
   }
 
 }

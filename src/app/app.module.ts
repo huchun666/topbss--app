@@ -63,6 +63,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DetailActivityPage } from '../pages/detail-activity/detail-activity';
 import { DetailOrderPage } from '../pages/detail-order/detail-order';
+import { UnhandleSelfPage } from '../pages/unhandle-self/unhandle-self';
+import { UnhandleExpressPage } from '../pages/unhandle-express/unhandle-express';
+import { UnauditCancelPage } from '../pages/unaudit-cancel/unaudit-cancel';
+import { UnauditReturnPage } from '../pages/unaudit-return/unaudit-return';
 let componentsList = [
   MyApp,
   Login,
@@ -101,7 +105,11 @@ let componentsList = [
   AwardActivity,
   AwardOrderPage,
   DetailActivityPage,
-  DetailOrderPage
+  DetailOrderPage,
+  UnhandleSelfPage,
+  UnhandleExpressPage,
+  UnauditCancelPage,
+  UnauditReturnPage
 ];
 @NgModule({
   declarations: [
