@@ -28,6 +28,9 @@ export class BrandshopOrderFinishedPage {
       this.getOrderListByDate(data);
     })
   }
+  ionViewDidEnter() {
+    this.content.scrollTo(0, 0, 0);
+  }
   // 获取订单列表
   getOrderList() {
     this.loadingShow = true;
@@ -88,7 +91,6 @@ export class BrandshopOrderFinishedPage {
     if (date.dateEnd != '') {
       this.paramsDate += `&endTime=${date.dateEnd}`;
     }
-    this.content.scrollTo(0, 0, 0);
     this.getOrderList();
   }
   // 是否显示明细
