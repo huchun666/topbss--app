@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Content, Events } from 'ionic-angular';
+import { Content } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
   selector: 'page-order-list-canceled',
@@ -7,12 +7,8 @@ import { AppService, AppConfig } from '../../app/app.service';
 })
 export class OrderListCanceledPage {
   @ViewChild(Content) content: Content;
-  dateStart: string = '';
-  dateEnd: string = '';
   isShowDetail = [];
   orderList = [];
-  orderStatusList: any;
-  currentStatus: any;
   pageSize: number = 10;
   paramsDate: string = '';
   noData: Boolean = false;
@@ -25,9 +21,7 @@ export class OrderListCanceledPage {
   requestDefeat: Boolean = false;
   showInfinite: Boolean = true;
   constructor(
-    public navCtrl: NavController,
-    public appService: AppService,
-    public events: Events) {
+    public appService: AppService) {
     this.load = AppConfig.load;
     this.appService.event.subscribe((data) => {
       this.getOrderListByDate(data);

@@ -7,23 +7,15 @@ import { AppService, AppConfig } from '../../app/app.service';
 })
 export class BrandshopOrderCanceledPage {
   @ViewChild(Content) content: Content;
-  dateStart: string = '';
-  dateEnd: string = '';
   isShowDetail = [];
   orderList = [];
-  orderStatusList: any;
-  currentStatus: any;
   pageSize: number = 10;
-  paramsStatus: string = '';
   paramsDate: string = '';
   noData: Boolean = false;
   start: number = 0;
   showNoMore: Boolean = false;
   loadingShow: Boolean = true;
   load: any = {};
-  dateEndMin = '1970'; //结束日期的最小值
-  dateEndMax: string = ''; //结束日期的最大值
-  dateStartMax: string = ''; //开始日期的最大值
   requestDefeat: Boolean = false;
   showInfinite: Boolean = true;
   up: Boolean = false;//上拉刷新和第一次进入页面时
@@ -32,8 +24,6 @@ export class BrandshopOrderCanceledPage {
     public navCtrl: NavController,
     public appService: AppService) {
     this.load = AppConfig.load;
-    this.dateStartMax = this.appService.reserveDate();
-    this.dateEndMax = this.appService.reserveDate();
     this.appService.eventBrand.subscribe((data) => {
       this.getOrderListByDate(data);
     })
@@ -48,8 +38,6 @@ export class BrandshopOrderCanceledPage {
     var url = `${AppConfig.API.getOrderList}?status=4&start=${this.start}&limit=${this.pageSize}`;
     if (this.paramsDate != '')
       url += this.paramsDate;
-    if (this.paramsStatus != '')
-      url += this.paramsStatus;
     this.appService.httpGet(url).then(data => {
       this.loadingShow = false;
       this.orderList = [];
@@ -124,8 +112,6 @@ export class BrandshopOrderCanceledPage {
     var url = `${AppConfig.API.getOrderList}?status=4&start=${this.start}&limit=${this.pageSize}`;
     if (this.paramsDate != '')
       url += this.paramsDate;
-    if (this.paramsStatus != '')
-      url += this.paramsStatus;
     this.appService.httpGet(url).then(data => {
       if (this.start < data.count) {
         this.orderList.push(...data.data);

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Content, Events } from 'ionic-angular';
+import { Content } from 'ionic-angular';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
   selector: 'page-order-list-finished',
@@ -7,12 +7,8 @@ import { AppService, AppConfig } from '../../app/app.service';
 })
 export class OrderListFinishedPage {
   @ViewChild(Content) content: Content;
-  dateStart: string = '';
-  dateEnd: string = '';
   isShowDetail = [];
   orderList = [];
-  orderStatusList: any;
-  currentStatus: any;
   pageSize: number = 10;
   paramsDate: string = '';
   noData: Boolean = false;
@@ -22,13 +18,10 @@ export class OrderListFinishedPage {
   load: any = {};
   up: Boolean = false;//上拉刷新和第一次进入页面时
   down: Boolean = true;//下拉刷新和返回上一级页面时
-  
   requestDefeat: Boolean = false;
   showInfinite: Boolean = true;
   constructor(
-    public navCtrl: NavController,
-    public appService: AppService,
-    public events: Events) {
+    public appService: AppService) {
     this.load = AppConfig.load;
     this.appService.event.subscribe((data) => {
       this.getOrderListByDate(data);

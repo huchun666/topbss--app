@@ -1,5 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
-import { NavController, Content, Events } from 'ionic-angular';
+import { NavController, Content } from 'ionic-angular';
 import { BrandshopOrderList } from '../brandshop-order-list/brandshop-order-list';
 import { AppService, AppConfig } from '../../app/app.service';
 import { OrderListAllPage } from '../order-list-all/order-list-all';
@@ -21,13 +21,8 @@ export class OrderList {
   finished: any = OrderListFinishedPage;
   dateStart: string = '';
   dateEnd: string = '';
-  isShowDetail = [];
   orderList = [];
-  orderStatusList: any;
-  currentStatus: any;
   pageSize: number = 10;
-  paramsStatus: string = '';
-  paramsDate: string = '';
   noData: Boolean = false;
   start: number = 0;
   showNoMore: Boolean = false;
@@ -47,8 +42,7 @@ export class OrderList {
   param: any;
   constructor(
     public navCtrl: NavController,
-    public appService: AppService,
-    public events: Events,
+    public appService: AppService
   ) {
     this.load = AppConfig.load;
   }
