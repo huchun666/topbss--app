@@ -2,95 +2,10 @@
   <ion-navbar>
     <ion-title text-center>审核中明细</ion-title>
   </ion-navbar>
-  <ion-toolbar class="filter-box">
-    <div class="status-box">
-      <ul>
-        <li *ngFor="let orderStatus of statusList, let i = index" [ngClass]="{active:currentStatus == orderStatus.status}" (click)="getCurrentStatus(i)">{{ orderStatus.label }}</li>
-      </ul>
-    </div>
-  </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="loading-wrapper" *ngIf="isLoadingShow">
-    <div>
-      <ion-spinner item-start [name]="load.spinner"></ion-spinner>
-    </div>
-    <div [innerHTML]="load.content"></div>
-  </div>
-  <ion-refresher (ionRefresh)="pullRefresh($event)" *ngIf="!loadingShow" style="margin-top: 50px;z-index:100">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <div class="withdraw-record">
-    <div class="withdraw-total">
-      <span *ngIf="isShow">总金额：￥ {{ sum }}</span>
-    </div>
-    <div class="record-list1" *ngIf="currentStatus == 0">
-      <div class="withdraw-item" *ngFor="let item of orderDetail">
-        <ul>
-          <li class='order-number'>订单编号：{{ item.relateId }}</li>
-          <li class='base-number'>结算基数：￥{{ item.baseAmount }}</li>
-          <li class='percentage'>奖励比例：{{ item.percent }}</li>
-          <li class="money">奖励金额：￥{{ item.amount }}</li>
-        </ul>
-      </div>
-      <div class="no-data" *ngIf="noData">
-        <img src="./assets/image/nodata.png" alt="">
-        <p>空空如也</p>
-      </div>
-      <div class="btn-noMore" *ngIf="showNoMore">
-        <span>—— 没有更多赠品了 ——</span>
-      </div>
-      <div class="request-defeat" *ngIf="requestDefeat">
-        <img src="./assets/image/requestDefeat.png" alt="">
-        <p>啊哦！页面走丢了</p>
-        <button class="btn-request-defeat" ion-button full (touchstart)="getOrderDetail()">
-          刷新再找一找
-        </button>
-      </div>
-      <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="!showNoMore && showInfinite">
-        <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </div>
-    <div class="record-list2" *ngIf="currentStatus == 1">
-      <div class="withdraw-item" *ngFor="let item of awardDetail">
-        <ul>
-          <li class='order-number'>
-            <span *ngIf="item.type === 3">订单编号：{{ item.relateId }}</span>
-            <span *ngIf="item.type === 4">会员手机：{{ item.mobile }}</span>
-          </li>
-          <li class='date'>活动时间：{{ item.startTime | date:'yyyy.MM.dd' }}--{{ item.endTime | date:'yyyy.MM.dd' }} </li>
-          <li class='base-number'>
-            <span *ngIf="item.type === 3">结算基数：￥{{ item.baseAmount }}</span>
-            <span *ngIf="item.type === 4">结算基数：——</span>
-          </li>
-          <li class='percentage'>
-            <span *ngIf="item.type === 3">奖励比例：{{ item.percent }}</span>
-            <span *ngIf="item.type === 4">奖励比例：——</span>
-          </li>
-          <li class="money">奖励金额：￥{{ item.amount }}</li>
-        </ul>
-      </div>
-      <div class="no-data" *ngIf="noData">
-        <img src="./assets/image/nodata.png" alt="">
-        <p>空空如也</p>
-      </div>
-      <div class="btn-noMore" *ngIf="showNoMore">
-        <span>—— 没有更多信息了 ——</span>
-      </div>
-      <div class="request-defeat" *ngIf="requestDefeat">
-        <img src="./assets/image/requestDefeat.png" alt="">
-        <p>啊哦！页面走丢了</p>
-        <button class="btn-request-defeat" ion-button full (touchstart)="getAwardDetail()">
-          刷新再找一找
-        </button>
-      </div>
-      <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="!showNoMore && showInfinite">
-        <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </div>
-  </div>
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="orderDetail.length < count">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  <super-tabs>
+    <super-tab [root]="awardOrder" title="订单处理金额明细"></super-tab>
+    <super-tab [root]="awardActivity" title="奖励活动金额明细"></super-tab>
+  </super-tabs>
 </ion-content>

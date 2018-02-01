@@ -50,7 +50,7 @@ import { WithdrawRecord } from '../pages/withdraw-record/withdraw-record';
 import { MyCode } from '../pages/mycode/mycode';
 import { AwardTabs } from '../pages/award-tabs/award-tabs';
 import { AwardActivity } from '../pages/award-activity/award-activity';
-import { AwardOrder } from '../pages/award-order/award-order';
+import { AwardOrderPage } from '../pages/award-order/award-order';
 import { BindAccount } from '../pages/account/bind-account/bind-account';
 import { AddAccount } from '../pages/account/add-account/add-account';
 import { EditAccount } from '../pages/account/edit-account/edit-account';
@@ -72,6 +72,8 @@ import { BrandshopOrderCancelingPage } from '../pages/brandshop-order-canceling/
 import { BrandshopOrderFinishedPage } from '../pages/brandshop-order-finished/brandshop-order-finished';
 import { BrandshopOrderPayPage } from '../pages/brandshop-order-pay/brandshop-order-pay';
 import { BrandshopOrderReceiptedPage } from '../pages/brandshop-order-receipted/brandshop-order-receipted';
+import { DetailActivityPage } from '../pages/detail-activity/detail-activity';
+import { DetailOrderPage } from '../pages/detail-order/detail-order';
 import { UnhandleSelfPage } from '../pages/unhandle-self/unhandle-self';
 import { UnhandleExpressPage } from '../pages/unhandle-express/unhandle-express';
 import { UnauditCancelPage } from '../pages/unaudit-cancel/unaudit-cancel';
@@ -102,9 +104,6 @@ let componentsList = [
   Withdraw,
   WithdrawRecord,
   MyCode,
-  AwardTabs,
-  AwardActivity,
-  AwardOrder,
   BindAccount,
   AddAccount,
   EditAccount,
@@ -124,6 +123,11 @@ let componentsList = [
   BrandshopOrderFinishedPage,
   BrandshopOrderPayPage,
   BrandshopOrderReceiptedPage,
+  AwardTabs,
+  AwardActivity,
+  AwardOrderPage,
+  DetailActivityPage,
+  DetailOrderPage,
   UnhandleSelfPage,
   UnhandleExpressPage,
   UnauditCancelPage,

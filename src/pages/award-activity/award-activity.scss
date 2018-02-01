@@ -1,5 +1,8 @@
 award-activity {
-		.back-button {
+  .content {
+    margin-top: 48px;
+  }
+	.back-button {
 		display: block;
   }
   .withdraw-record {
@@ -27,5 +30,9 @@ award-activity {
 		.date {
 			color: #999;
 		}
-    }
+  }
+  .refresher {
+    margin-top: 50px;
+    z-index:100
+  }
 }

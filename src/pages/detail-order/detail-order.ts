@@ -1,18 +1,22 @@
-import { Content } from 'ionic-angular';
-import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ViewController, Platform, Content } from 'ionic-angular';
+import { Component, ViewChild, } from '@angular/core';
 import { AppService, AppConfig } from '../../app/app.service';
 @Component({
-  selector: 'page-award-order',
-  templateUrl: 'award-order.html',
+  selector: 'page-detail-order',
+  templateUrl: 'detail-order.html',
 })
-export class AwardOrderPage {
+export class DetailOrderPage {
   @ViewChild(Content) content: Content;
   statusList = [];
   pageSize: number = 10;
   currentPage: number = 1;
+  currentStatus: number = 0;
   orderDetail: any = [];
+  awardDetail: any = [];
   count: number = 0;
   start: number = 0;
+  sum1: any;
+  sum2: any;
   sum: any;
   up: Boolean = false;
   down: Boolean = true;
@@ -28,7 +32,7 @@ export class AwardOrderPage {
   requestDefeat: Boolean = false;
   showInfinite: Boolean = false;
   limit = 10;
-  constructor(public appService: AppService) {
+  constructor(public navController: NavController, public navParams: NavParams, public viewController: ViewController, public platform: Platform, public appService: AppService) {
     this.load = AppConfig.load;
     this.getOrderDetail();
     this.getBonusSum();
@@ -38,7 +42,7 @@ export class AwardOrderPage {
     this.showNoMore = false;
     this.noData = false;
     this.requestDefeat = false;
-    let url = `${AppConfig.API.bonusList}?typeList=1,6&statusList=0,1&start=${this.start}&limit=${this.pageSize}`;
+    let url = `${AppConfig.API.bonusList}?typeList=1,6&statusList=2&start=${this.start}&limit=${this.pageSize}`;
     this.appService.httpGet(url)
       .then(data => {
         this.loadingShow = false;
@@ -86,7 +90,7 @@ export class AwardOrderPage {
   }
   /** 获取总金额 **/
   getBonusSum() {
-    let url = `${AppConfig.API.bonusSum}?typeList=1,6&statusList=0,1`;
+    let url = `${AppConfig.API.bonusSum}?typeList=1,6&statusList=2`;
     this.appService.httpGet(url)
       .then(data => {
         this.sum = data.sum;
@@ -104,7 +108,7 @@ export class AwardOrderPage {
   }
   /** 上拉翻页 **/
   loadMore(infiniteScroll) {
-    let url = `${AppConfig.API.bonusList}?typeList=1,6&statusList=0,1&start=${this.start}&limit=${this.pageSize}`;
+    let url = `${AppConfig.API.bonusList}?typeList=1,6&statusList=2&start=${this.start}&limit=${this.pageSize}`;
     this.appService.httpGet(url)
       .then(data => {
         if (data.data.length != 0) {

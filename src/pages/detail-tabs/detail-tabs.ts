@@ -1,12 +1,16 @@
 import { NavController, NavParams, ViewController, Platform, Content } from 'ionic-angular';
-import { Component, ViewChild, } from '@angular/core';
+import { Component ,ViewChild, } from '@angular/core';
 import { AppService, AppConfig } from '../../app/app.service';
+import { DetailActivityPage } from '../detail-activity/detail-activity';
+import { DetailOrderPage } from '../detail-order/detail-order';
 @Component({
   templateUrl: 'detail-tabs.html',
   selector: 'withdraw-detailTabs'
 })
 export class DetailTabs {
   @ViewChild(Content) content: Content;
+  detailOrder: any = DetailOrderPage;
+  detailActivity:any = DetailActivityPage;
   statusList = [];
   pageSize: number = 10;
   currentPage: number = 1;
@@ -65,62 +69,64 @@ export class DetailTabs {
     this.noData = false;
     this.requestDefeat = false;
     let url = `${AppConfig.API.bonusList}?typeList=1,6&statusList=2&start=${this.start}&limit=${this.pageSize}`;
-    this.appService.httpGet(url).then(data => {
-      this.loadingShow = false;
-      if (this.start < data.count) {
-        this.showNoMore = false;
-        this.noData = false;
-        this.start += this.limit;
-        this.showInfinite = true;
-        if (this.up) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
-          });
-          this.orderDetail.push(...data.data);
-        } else if (this.down) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
-          });
-          this.orderDetail = data.data;
+    this.appService.httpGet(url)
+      .then(data => {
+        this.loadingShow = false;
+        if (this.start < data.count) {
+          this.showNoMore = false;
+          this.noData = false;
+          this.start += this.limit;
+          this.showInfinite = true;
+          if (this.up) {
+            data.data.map(item => {
+              item.baseAmount = item.baseAmount.toFixed(2);
+              item.percent = item.percent;
+              item.amount = item.amount.toFixed(2);
+              item.returnAmount = item.returnAmount.toFixed(2);
+            });
+            this.orderDetail.push(...data.data);
+          } else if (this.down) {
+            data.data.map(item => {
+              item.baseAmount = item.baseAmount.toFixed(2);
+              item.percent = item.percent;
+              item.amount = item.amount.toFixed(2);
+              item.returnAmount = item.returnAmount.toFixed(2);
+            });
+            this.orderDetail = data.data;
+          }
+        } else if (data.count == 0) {
+          this.noData = true;
+          this.showNoMore = false;
+          this.orderDetail = [];
+        } else if (data.data.length == 0) {
+          this.noData = false;
+          this.showNoMore = true;
         }
-      } else if (data.count == 0) {
-        this.noData = true;
-        this.showNoMore = false;
-        this.orderDetail = [];
-      } else if (data.data.length == 0) {
-        this.noData = false;
-        this.showNoMore = true;
-      }
-    }).catch(error => {
-      this.appService.getToken(error, () => {
-        this.getOrderDetail();
+      }).catch(error => {
+        this.appService.getToken(error, () => {
+          this.getOrderDetail();
+        });
+        console.log(error);
+        this.isEmpty = false;
+        this.isLoadingShow = false;
+        if(error.error != "invalid_token") {
+          this.requestFail = true;
+        }
       });
-      console.log(error);
-      this.isEmpty = false;
-      this.isLoadingShow = false;
-      if (error.error != "invalid_token") {
-        this.requestFail = true;
-      }
-    });
   }
   /** 获取总金额 **/
   getBonusSum1() {
     let url = `${AppConfig.API.bonusSum}?typeList=1,6&statusList=2`;
-    this.appService.httpGet(url).then(data => {
-      this.sum = data.sum;
-      this.setIsShow(this.sum);
-    }).catch(error => {
-      this.appService.getToken(error, () => {
-        this.getBonusSum1();
+    this.appService.httpGet(url)
+      .then(data => {
+        this.sum = data.sum;
+        this.setIsShow(this.sum);
+      }).catch(error => {
+        this.appService.getToken(error, () => {
+          this.getBonusSum1();
+        });
+        console.log(error);
       });
-      console.log(error);
-    });
   }
   getAwardDetail() {
     this.loadingShow = true;
@@ -128,62 +134,64 @@ export class DetailTabs {
     this.noData = false;
     this.requestDefeat = false;
     let url = `${AppConfig.API.bonusList}?typeList=3,4&statusList=2&start=${this.start}&limit=${this.pageSize}`;
-    this.appService.httpGet(url).then(data => {
-      this.loadingShow = false;
-      if (this.start < data.count) {
-        this.showNoMore = false;
-        this.noData = false;
-        this.start += this.limit;
-        this.showInfinite = true;
-        if (this.up) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
-          });
-          this.awardDetail.push(...data.data);
-        } else if (this.down) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
-          });
-          this.awardDetail = data.data;
+    this.appService.httpGet(url)
+      .then(data => {
+        this.loadingShow = false;
+        if (this.start < data.count) {
+          this.showNoMore = false;
+          this.noData = false;
+          this.start += this.limit;
+          this.showInfinite = true;
+          if (this.up) {
+            data.data.map(item => {
+              item.baseAmount = item.baseAmount.toFixed(2);
+              item.percent = item.percent;
+              item.amount = item.amount.toFixed(2);
+              item.returnAmount = item.returnAmount.toFixed(2);
+            });
+            this.awardDetail.push(...data.data);
+          } else if (this.down) {
+            data.data.map(item => {
+              item.baseAmount = item.baseAmount.toFixed(2);
+              item.percent = item.percent;
+              item.amount = item.amount.toFixed(2);
+              item.returnAmount = item.returnAmount.toFixed(2);
+            });
+            this.awardDetail = data.data;
+          }
+        } else if (data.count == 0) {
+          this.noData = true;
+          this.showNoMore = false;
+          this.awardDetail = [];
+        } else if (data.data.length == 0) {
+          this.noData = false;
+          this.showNoMore = true;
         }
-      } else if (data.count == 0) {
-        this.noData = true;
-        this.showNoMore = false;
-        this.awardDetail = [];
-      } else if (data.data.length == 0) {
-        this.noData = false;
-        this.showNoMore = true;
-      }
-    }).catch(error => {
-      this.appService.getToken(error, () => {
-        this.getAwardDetail();
+      }).catch(error => {
+        this.appService.getToken(error, () => {
+          this.getAwardDetail();
+        });
+        console.log(error);
+        this.isEmpty = false;
+        this.isLoadingShow = false;
+        if(error.error != "invalid_token") {
+          this.requestFail = true;
+        }
       });
-      console.log(error);
-      this.isEmpty = false;
-      this.isLoadingShow = false;
-      if (error.error != "invalid_token") {
-        this.requestFail = true;
-      }
-    });
   }
   /** 获取总金额 **/
   getBonusSum2() {
     let url = `${AppConfig.API.bonusSum}?typeList=3,4&statusList=2`;
-    this.appService.httpGet(url).then(data => {
-      this.sum = data.sum;
-      this.setIsShow(this.sum);
-    }).catch(error => {
-      this.appService.getToken(error, () => {
-        this.getBonusSum2();
+    this.appService.httpGet(url)
+      .then(data => {
+        this.sum = data.sum;
+        this.setIsShow(this.sum);
+      }).catch(error => {
+        this.appService.getToken(error, () => {
+          this.getBonusSum2();
+        });
+        console.log(error);
       });
-      console.log(error);
-    });
   }
   /** 有无明细列表时的判断（判断总金额是否为0）**/
   setIsShow(sum) {
@@ -193,58 +201,60 @@ export class DetailTabs {
   loadMore(infiniteScroll) {
     if (this.currentStatus == 0) {
       let url = `${AppConfig.API.bonusList}?typeList=1,6&statusList=2&start=${this.start}&limit=${this.pageSize}`;
-      this.appService.httpGet(url).then(data => {
-        infiniteScroll.complete();
-        if (data.data.length != 0) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
+      this.appService.httpGet(url)
+        .then(data => {
+          if (data.data.length != 0) {
+            data.data.map(item => {
+              item.baseAmount = item.baseAmount.toFixed(2);
+              item.percent = item.percent;
+              item.amount = item.amount.toFixed(2);
+              item.returnAmount = item.returnAmount.toFixed(2);
+            });
+            this.orderDetail.push(...data.data);
+            this.start += this.limit;
+          } else {
+            this.showNoMore = true;
+          }
+          infiniteScroll.complete();
+        }).catch(error => {
+          this.appService.getToken(error, () => {
+            this.loadMore(infiniteScroll);
           });
-          this.orderDetail.push(...data.data);
-          this.start += this.limit;
-        } else {
-          this.showNoMore = true;
-        }
-      }).catch(error => {
-        this.appService.getToken(error, () => {
-          this.loadMore(infiniteScroll);
+          console.log(error);
+          this.isEmpty = false;
+          this.isLoadingShow = false;
+          if(error.error != "invalid_token") {
+            this.requestFail = true;
+          }
         });
-        console.log(error);
-        this.isEmpty = false;
-        this.isLoadingShow = false;
-        if (error.error != "invalid_token") {
-          this.requestFail = true;
-        }
-      });
     } else {
       let url = `${AppConfig.API.bonusList}?typeList=3,4&statusList=2&start=${this.start}&limit=${this.pageSize}`;
-      this.appService.httpGet(url).then(data => {
-        infiniteScroll.complete();
-        if (data.data.length != 0) {
-          data.data.map(item => {
-            item.baseAmount = item.baseAmount.toFixed(2);
-            item.percent = item.percent;
-            item.amount = item.amount.toFixed(2);
-            item.returnAmount = item.returnAmount.toFixed(2);
+      this.appService.httpGet(url)
+        .then(data => {
+          if (data.data.length != 0) {
+            data.data.map(item => {
+              item.baseAmount = item.baseAmount.toFixed(2);
+              item.percent = item.percent;
+              item.amount = item.amount.toFixed(2);
+              item.returnAmount = item.returnAmount.toFixed(2);
+            });
+            this.awardDetail.push(...data.data);
+            this.start += this.limit;
+          } else {
+            this.showNoMore = true;
+          }
+          infiniteScroll.complete();
+        }).catch(error => {
+          this.appService.getToken(error, () => {
+            this.loadMore(infiniteScroll);
           });
-          this.awardDetail.push(...data.data);
-          this.start += this.limit;
-        } else {
-          this.showNoMore = true;
-        }
-      }).catch(error => {
-        this.appService.getToken(error, () => {
-          this.loadMore(infiniteScroll);
+          console.log(error);
+          this.isEmpty = false;
+          this.isLoadingShow = false;
+          if(error.error != "invalid_token") {
+            this.requestFail = true;
+          }
         });
-        console.log(error);
-        this.isEmpty = false;
-        this.isLoadingShow = false;
-        if (error.error != "invalid_token") {
-          this.requestFail = true;
-        }
-      });
     }
   }
   /** 下拉刷新页面 **/
