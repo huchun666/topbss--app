@@ -52,7 +52,7 @@ export class PaymentCode {
   }
   //关闭(完成)移除所有的view,直接显示home
   goTabs() {
-    this.navCtrl.remove(0, this.navCtrl.length());
+    this.navCtrl.remove(1, this.navCtrl.length() - 1);
   }
   //定时检测配单仓状态
   Interval() {
@@ -63,7 +63,7 @@ export class PaymentCode {
         if (data.status == 0 && !self.isOrderAgain) {
           self.isStatus = true;
           window.clearInterval(self.timer);
-          self.navCtrl.remove(0, self.navCtrl.length());
+          self.navCtrl.remove(1, self.navCtrl.length() - 1);
           self.events.publish('check: status', self.isStatus);
         } else {
           self.isStatus = false;

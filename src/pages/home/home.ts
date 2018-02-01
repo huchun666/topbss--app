@@ -154,13 +154,11 @@ export class Home {
   }
   /** 我的二维码 **/
   goMyCode() {
-    let myCodeModal = this.modalCtrl.create(MyCode);
-    myCodeModal.present();
+    this.navCtrl.push(MyCode);
   }
   /** 配单仓 **/
   goCreatOrder() {
-    let creatOrderModal = this.modalCtrl.create(CreatOrder);
-    creatOrderModal.present();
+    this.navCtrl.push(CreatOrder);
   }
   /** Network检查网络状态 **/
   watchNetwork() {

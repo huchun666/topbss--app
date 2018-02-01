@@ -85,6 +85,9 @@ export class CreatOrder {
     }, {
         cssClass: 'order-sku-list'
       });
+    orderModal.onDidDismiss(() => {
+      this.getWarehouseCount();
+    })
     orderModal.present();
   }
   orderRepertory() {

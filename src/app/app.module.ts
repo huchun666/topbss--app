@@ -158,7 +158,10 @@ let componentsList = [
       backButtonText: '返回',
       modalEnter: 'modal-slide-in',
       modalLeave: 'modal-slide-out',
-      statusbarPadding: false
+      statusbarPadding: false,
+      swipeBackEnabled: true,
+      tabsHideOnSubPages: true,
+      pageTransition: 'android-transition'
     }),
     SuperTabsModule.forRoot()
   ],
