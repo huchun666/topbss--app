@@ -2,6 +2,20 @@ award-tabs {
   .back-button {
 		display: block;
   }
+  .tab-buttons-container {
+    background-color: white!important;
+    padding: 0;
+    color: #5e9efe;
+    super-tab-button.selected {
+      border-bottom: solid 4px #5e9efe;
+    }
+  }
+  super-tabs-container {
+    height: 100%!important;
+  }
+  .btn-noMore {
+    margin-bottom: 5rem;
+  }
   .tabbar.show-tabbar {
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
@@ -15,7 +29,6 @@ award-tabs {
 			border-bottom: solid 4px transparent;
 			padding: 0!important;
 			margin: 0 1.5rem;
-			border-bottom: solid 4px #fff;
 			span {
 				font-size: 1.5rem!important;
 			}
@@ -125,10 +138,6 @@ award-tabs {
 			}
 		}
   }
-  .filter-box.toolbar-ios {
-    top: 34px + $cordova-ios-statusbar-padding!important;
-    height: 5rem;
-  }
   .withdraw-record {
 		color: #333;
 		font-size: 1.5rem;
@@ -137,7 +146,6 @@ award-tabs {
 		line-height: 46px;
 		min-height: 16px;
     padding: 0 1rem;
-    margin-top: 44px;
   }
   .record-list2 {
     padding: 0 1rem;
