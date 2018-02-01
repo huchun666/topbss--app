@@ -1,11 +1,11 @@
-<ion-content style="margin-top: 48px;">
+<ion-content>
   <div class="loading-wrapper" *ngIf="isLoadingShow">
     <div>
       <ion-spinner item-start [name]="load.spinner"></ion-spinner>
     </div>
     <div [innerHTML]="load.content"></div>
   </div>
-  <ion-refresher (ionRefresh)="pullRefresh($event)" *ngIf="!loadingShow" style="margin-top: 50px;z-index:100">
+  <ion-refresher (ionRefresh)="pullRefresh($event)" *ngIf="!loadingShow" class="refresher">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <div class="withdraw-record">
