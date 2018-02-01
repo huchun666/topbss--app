@@ -1,0 +1,92 @@
+<ion-content>
+  <div class="order-list">
+    <!-- loading -->
+    <div class="loading-wrapper" *ngIf="loadingShow">
+      <div>
+        <ion-spinner item-start [name]="load.spinner"></ion-spinner>
+      </div>
+      <div [innerHTML]="load.content"></div>
+    </div>
+    <ion-refresher *ngIf="!loadingShow" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content>
+      </ion-refresher-content>
+    </ion-refresher>
+
+    <div class="order-items" *ngFor="let order of orderList; let i = index">
+      <!-- 订单编号 -->
+      <div class="order-title">
+        <h2>订单编号：
+          <span>{{ order.orderId }}</span>
+        </h2>
+        <!-- 订单状态-->
+        <span [ngClass]="{auditStatus: true, pass:(order.status | setOrderStatus).pass , auditing:(order.status | setOrderStatus).audit} ">{{(order.status | setOrderStatus).status}}</span>
+      </div>
+      <!-- 商品 -->
+      <div class="order-item" *ngFor="let product of order.orderItemProductSkuDTOS">
+        <dl>
+          <dt>
+            <img class="my-picture" src="{{product.productSkuDTO.fileSeq | productSkuDTOImage}}" [alt]="product.productSkuDTO.productName">
+          </dt>
+          <dd class="product-title">{{ product.productSkuDTO.productName }}</dd>
+          <dd class="sku-list">
+            <span *ngFor="let sku of product.productSkuDTO.attrValueList">{{ sku.attrValue }} </span>
+          </dd>
+          <dd class='price' *ngIf="order.userType != 'B'">￥{{ product.unitPrice }}</dd>
+          <dd class='price' *ngIf="order.userType == 'B'">商品总额：￥{{ product.unitPrice }}</dd>
+          <dd class="count">X{{ product.number }}</dd>
+        </dl>
+      </div>
+
+      <!-- 已完成订单 -->
+      <div class="orderOperate">
+        <dl>
+          <dt>
+            <a href="tel:{{order.memberMobile}}">
+              <img src="./assets/image/phone.png" alt="">
+            </a>
+          </dt>
+          <dd class="total">会员手机：{{ order.memberMobile }}</dd>
+          <dd class="member-phone" *ngIf="order.status == 3 || order.status == 6 || order.status == 'C'">收货时间：{{ order.receiptTime | date:'yyyy-MM-dd HH:mm:ss' }}</dd>
+        </dl>
+      </div>
+      <div class="order-dtail-box">
+        <div class="order-detail" *ngIf="isShowDetail[i]">
+          <ul>
+            <li>订单总额：￥{{ order.totalAmount }}</li>
+            <li>促销抵扣：￥{{ order.discountAmount }}</li>
+            <li>淘璞券折扣：￥{{ order.couponAmount }}</li>
+            <li>商户券抵扣：￥{{ order.merchantCouponAmount }}</li>
+            <li>积分抵扣：￥{{ order.integralAmount }}</li>
+          </ul>
+        </div>
+        <div class="pay-money">
+          会员实付金额
+          <span>￥{{ order.payAmount }}</span>
+        </div>
+        <div class="btn-show" (click)="showDetail(i)">
+          <span *ngIf="isShowDetail[i] == false">点击查看明细</span>
+          <span *ngIf="isShowDetail[i] == true">点击收起明细</span>
+          <span [ngClass]="{'icon-triangle':true, 'icon-bottom': isShowDetail[i]}"></span>
+        </div>
+      </div>
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="showInfinite && !loadingShow">
+      <ion-infinite-scroll-content loadingText="加载更多..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+  <div class="no-data" *ngIf="noData">
+    <img src="./assets/image/nodata.png" alt="">
+    <p>空空如也</p>
+  </div>
+  <div class="btn-noMore" *ngIf="showNoMore">
+    <span>—— 没有更多信息了 ——</span>
+  </div>
+  <div class="request-defeat" *ngIf = "requestDefeat">
+    <img src="./assets/image/requestDefeat.png" alt="">
+    <p>啊哦！页面走丢了</p>
+    <button class="btn-request-defeat" ion-button full (touchstart)="requestDefeatRefresh()">
+      刷新再找一找
+    </button>
+  </div>
+</ion-content>

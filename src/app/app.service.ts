@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { LoadingController, Loading, ToastController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
@@ -78,6 +78,8 @@ export class AppService {
     private toastCtrl: ToastController
   ) {
   }
+  public event: EventEmitter<any> = new EventEmitter<any>();
+  public eventBrand: EventEmitter<any> = new EventEmitter<any>();
 
   //get request with Authorization
   httpGet(url: string) {

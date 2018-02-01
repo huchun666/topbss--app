@@ -1,9 +1,26 @@
 order-list { 
+  .orderContent {
+    margin-top: 40px;
+  }
   .brandshop-order {
 		color: #fff;
 		position: absolute;
 		right: 1rem;
-		bottom: 1rem;
+		top: 12px;
+  }
+  .tab-buttons-container {
+    background-color: white!important;
+    padding: 0;
+    color: #5e9efe;
+    super-tab-button.selected {
+      border-bottom: solid 4px #5e9efe;
+    }
+  }
+  super-tabs-container {
+    height: 100%!important;
+  }
+  .btn-noMore {
+    margin-bottom: 5rem;
   }
   .order-title {
 		background: #fff;
@@ -39,7 +56,7 @@ order-list {
 		}
   }
   .order-list {
-		margin: 99px .8rem .8rem;
+		margin: 58px .8rem .8rem;
 		.order-items {
 			background: #fff;
 			margin-top: .8rem;
@@ -188,7 +205,10 @@ order-list {
 		.order-detail {
 			color: #999;
 			padding-bottom: 3rem;
-		}
+    }
+    .btn-noMore {
+      margin-bottom: 5rem;
+    }
   }
   // 固定时间
   .filter-box {
@@ -279,10 +299,6 @@ order-list {
 				}
 			}
 		}
-  }
-  .filter-box.toolbar-ios {
-    top: 34px + $cordova-ios-statusbar-padding!important;
-    height: 9rem;
   }
 }
 .has-refresher > .scroll-content {

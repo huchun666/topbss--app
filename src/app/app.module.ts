@@ -61,6 +61,17 @@ import { AwardDetail } from '../pages/award-detail/award-detail';
 import { DetailTabs } from '../pages/detail-tabs/detail-tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { OrderListAllPage } from '../pages/order-list-all/order-list-all';
+import { OrderListCanceledPage } from '../pages/order-list-canceled/order-list-canceled';
+import { OrderListFinishedPage } from '../pages/order-list-finished/order-list-finished';
+import { OrderListPayPage } from '../pages/order-list-pay/order-list-pay';
+import { OrderListReceiptPage } from '../pages/order-list-receipt/order-list-receipt';
+import { BrandshopOrderAllPage } from '../pages/brandshop-order-all/brandshop-order-all';
+import { BrandshopOrderCanceledPage } from '../pages/brandshop-order-canceled/brandshop-order-canceled';
+import { BrandshopOrderCancelingPage } from '../pages/brandshop-order-canceling/brandshop-order-canceling';
+import { BrandshopOrderFinishedPage } from '../pages/brandshop-order-finished/brandshop-order-finished';
+import { BrandshopOrderPayPage } from '../pages/brandshop-order-pay/brandshop-order-pay';
+import { BrandshopOrderReceiptedPage } from '../pages/brandshop-order-receipted/brandshop-order-receipted';
 import { DetailActivityPage } from '../pages/detail-activity/detail-activity';
 import { DetailOrderPage } from '../pages/detail-order/detail-order';
 import { UnhandleSelfPage } from '../pages/unhandle-self/unhandle-self';
@@ -101,6 +112,17 @@ let componentsList = [
   OrderDetail,
   AwardDetail,
   DetailTabs,
+  OrderListAllPage,
+  OrderListCanceledPage,
+  OrderListFinishedPage,
+  OrderListPayPage,
+  OrderListReceiptPage,
+  BrandshopOrderAllPage,
+  BrandshopOrderCanceledPage,
+  BrandshopOrderCancelingPage,
+  BrandshopOrderFinishedPage,
+  BrandshopOrderPayPage,
+  BrandshopOrderReceiptedPage,
   AwardTabs,
   AwardActivity,
   AwardOrderPage,
