@@ -205,11 +205,11 @@
   },
   {
     "file": "build/main.css",
-    "hash": "f792dca530182623d0c1290196bae801"
+    "hash": "de910cfad30ba596a22576d25e39f72e"
   },
   {
     "file": "build/main.js",
-    "hash": "22402f3d457e03af92ab01f3ebe8c832"
+    "hash": "b42069e925f9c4a0c9e6c5f349e21c6c"
   },
   {
     "file": "build/polyfills.js",
@@ -221,11 +221,11 @@
   },
   {
     "file": "build/vendor.js",
-    "hash": "647c5e02cb495f533f998490f49353d5"
+    "hash": "75c1d08cd9e08e38b25c2428a2bf804a"
   },
   {
     "file": "index.html",
-    "hash": "a4db41e2c0c89f17463778403991d2e5"
+    "hash": "6124623346a0880fe33290e19bf5c78d"
   },
   {
     "file": "manifest.json",
