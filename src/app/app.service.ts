@@ -61,6 +61,7 @@ export class AppConfig {
     receiveGift: `${AppConfig.hostUrl}/promotion/member/gift/account/receiveGift`,
     firstLogin: `${AppConfig.hostUrl}/uaa/getInfo`,//查询是否第一次登录
     editPassword: `${AppConfig.hostUrl}/uaa/password`,//更改密码
+    withdrawTax: `${AppConfig.hostUrl}/account/brandshop/user/withdraw/tax`,//查询提现扣税
   };
   // ion-spinner
   static load: any = {
