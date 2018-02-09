@@ -172,15 +172,17 @@ cordova-hcp build
 
 
 ## 部署流程
-修改完文件后保存 -> cordova-hcp build (重新生成release) -> 打包编译APP ->发布热更新文件(www)到服务器 -> 测试APP热更新
+修改完文件后保存 -> 打包编译APP -> cordova-hcp build (重新生成release和chcp.manifest) ->发布热更新文件(www)到服务器 -> 测试APP热更新
+
+
 
 * 保存修改好的文件
-
-* cordova-hcp build
 
 此命令会生成www下的chcp.json和chcp.manifest文件，build的时候需要确保cordova-hcp.json模板文件内的content_url和platform(android or ios)内的的config.xml中的config-file的域名保持对应
 
 * 打包编译APP
+
+* cordova-hcp build
 
 ```
 ./build-test.sh     //测试APK编译脚本
