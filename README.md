@@ -182,12 +182,14 @@ cordova-hcp build
 
 * 打包编译APP
 
-* cordova-hcp build
 
 ```
 ./build-test.sh     //测试APK编译脚本
 ./ production.sh    //生产APK编译脚本
 ```
+
+* cordova-hcp build
+
 
 * 发布热更新文件到服务端
 
