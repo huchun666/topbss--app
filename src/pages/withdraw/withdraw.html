@@ -11,7 +11,7 @@
       <ion-input type="number" [(ngModel)]="amount"></ion-input>
     </ion-item>
     <div class="message">*当前最多可提现金额：
-      <span>￥{{ balance }}</span>
+      <span>￥{{ balanceString }}</span>
     </div>
     <div class="error" *ngIf="amout > allAmout">*金额值不可大于当前最多可提现金额值</div>
     <button [disabled]="!(amount > 0) || (amount > balance)" class="btn-confirm" ion-button (click)="withdraw()">确定</button>
