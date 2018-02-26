@@ -96,7 +96,7 @@ export class OrderStore {
         loading.dismiss();
         this.totalPrice = 0;
         this.orderStoreDataArray.map((item) => {
-          this.totalPrice += item.itemPrice;
+          this.totalPrice += Number(item.itemPrice);
         })
         this.totalPriceFloat = parseFloat(`${this.totalPrice.toString()}`).toFixed(2);
       }
@@ -120,6 +120,7 @@ export class OrderStore {
   addCount(index) {
     if (this.orderStoreDataArray[index].productSkuDTO.stock > this.orderStoreDataArray[index].productNum) {
       this.orderStoreDataArray[index].productNum++;
+      this.orderStoreDataArray[index].itemPrice = (this.orderStoreDataArray[index].productNum * (this.orderStoreDataArray[index].productSkuDTO.attrValueList[0].price * 10))/10;
       this.warehouseUpdate(index, "add");
     } else {
       this.appService.toast('不能添加更多宝贝了哦！', 1000, 'middle');
@@ -129,6 +130,7 @@ export class OrderStore {
   removeCount(index) {
     if (this.orderStoreDataArray[index].productNum > 1) {
       this.orderStoreDataArray[index].productNum--;
+      this.orderStoreDataArray[index].itemPrice = (this.orderStoreDataArray[index].productNum * (this.orderStoreDataArray[index].productSkuDTO.attrValueList[0].price * 10))/10;
       this.warehouseUpdate(index, "remove");
     }
   }
@@ -176,13 +178,16 @@ export class OrderStore {
   resetProductNum(index) {
     if (this.orderStoreDataArray[index].productNum <= 0) {
       this.orderStoreDataArray[index].productNum = 1;
+      this.orderStoreDataArray[index].itemPrice = (this.orderStoreDataArray[index].productNum * (this.orderStoreDataArray[index].productSkuDTO.attrValueList[0].price * 10))/10;
       this.appService.toast('商品数量不能为空', 1000, 'middle');
     }
     if (this.orderStoreDataArray[index].productSkuDTO.stock >= this.orderStoreDataArray[index].productNum) {
+      this.orderStoreDataArray[index].itemPrice = (this.orderStoreDataArray[index].productNum * (this.orderStoreDataArray[index].productSkuDTO.attrValueList[0].price * 10))/10;
       this.warehouseUpdate(index, "reset");
     } else {
       this.appService.toast('不能超出库存哦', 1000, 'middle');
       this.orderStoreDataArray[index].productNum = this.orderStoreDataArray[index].productSkuDTO.stock;
+      this.orderStoreDataArray[index].itemPrice = (this.orderStoreDataArray[index].productNum * (this.orderStoreDataArray[index].productSkuDTO.attrValueList[0].price * 10))/10;
       this.warehouseUpdate(index, "reset");
     }
   }
